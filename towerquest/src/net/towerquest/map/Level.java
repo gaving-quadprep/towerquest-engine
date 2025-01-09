@@ -15,7 +15,7 @@ public class Level implements WorldRenderable, ISerializable {
 	public void render(WorldRenderer wr) {
 		// TODO Auto-generated method stub
 		for (Entity e : entities) {
-			
+			e.render(wr);
 		}
 	}
 	

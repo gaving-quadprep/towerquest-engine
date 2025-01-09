@@ -1,4 +1,4 @@
-	package net.towerquest;
+package net.towerquest;
 
 import org.lwjgl.LWJGLException;
 import org.lwjgl.Sys;
@@ -12,6 +12,9 @@ import net.towerquest.map.Level;
 import net.towerquest.util.Logger;
  
 public class TowerQuest {
+	
+	int maxFPS = 0;
+	
 	/** position of quad */
 	float x = 400, y = 300;
 	/** angle of quad rotation */
@@ -49,7 +52,7 @@ public class TowerQuest {
 			renderGL();
  
 			Display.update();
-			Display.sync(0); // cap fps to 60fps
+			Display.sync(maxFPS); // cap fps to 60fps
 		}
 		
 		Logger.instance.log("Stopping");
