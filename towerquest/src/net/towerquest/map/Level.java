@@ -20,7 +20,8 @@ public class Level implements WorldRenderable, ISerializable {
 	}
 	
 	public void addEntity(Entity e) {
-		
+		entities.add(e);
+		e.setLevel(this);
 	}
 
 	@Override

@@ -33,6 +33,14 @@ public class Entity implements ISerializable, WorldRenderable {
 		}
 	}
 	
+	public void setLevel(Level level) {
+		this.level = level;
+	}
+	
+	public Level getLevel() {
+		return this.level;
+	}
+	
 	public void addComponent(Component c) {
 		components.add(c);
 		c.setParent(this);
