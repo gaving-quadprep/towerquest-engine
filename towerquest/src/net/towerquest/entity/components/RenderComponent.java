@@ -1,5 +1,6 @@
-package net.towerquest.entity;
+package net.towerquest.entity.components;
 
+import net.towerquest.entity.Component;
 import net.towerquest.event.RenderEvent;
 import net.towerquest.render.WorldRenderable;
 import net.towerquest.render.WorldRenderer;

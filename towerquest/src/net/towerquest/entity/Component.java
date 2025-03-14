@@ -39,12 +39,16 @@ public abstract class Component implements ISerializable {
 		events.add(e);
 	}
 	
+	public Class<? extends Component>[] getDependencies() {
+		return new Class[] {};
+	}
+	
 	public void update() {
 		for (Event e : this.getEvents()) {
 			if(e instanceof UpdateEvent)
 				((UpdateEvent)e).fire(null);
 		}
-	};
+	}
 
 
 	@Override

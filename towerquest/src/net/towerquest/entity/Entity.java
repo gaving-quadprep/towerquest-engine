@@ -15,7 +15,6 @@ public class Entity implements ISerializable, WorldRenderable {
 	private List<Component> components = new ArrayList<Component>();
 	//private List<Event> events = new ArrayList<Event>();
 	private Level level;
-	public double x, y;
 	
 	@Override
 	public void render(WorldRenderer wr) {
@@ -42,6 +41,7 @@ public class Entity implements ISerializable, WorldRenderable {
 	}
 	
 	public void addComponent(Component c) {
+		
 		components.add(c);
 		c.setParent(this);
 	}
