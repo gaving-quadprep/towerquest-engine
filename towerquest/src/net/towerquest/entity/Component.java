@@ -11,7 +11,7 @@ import net.towerquest.save.ISerializable;
 import net.towerquest.save.SerializedData;
 
 public abstract class Component implements ISerializable {
-	private List<Event> events = new ArrayList<Event>();
+	private List<Event<?>> events = new ArrayList<Event<?>>();
 	
 	private Entity parent;
 	public void setParent(Entity e) {
@@ -22,12 +22,12 @@ public abstract class Component implements ISerializable {
 	}
 	
 	public Event[] getEvents() {
-		return (Event[]) events.toArray();
+		return events.toArray(new Event[] {});
 	}
 	
-	public <T extends Event> T[] getEventsOfType(Class<T> clazz) {
+	public <T extends Event<?>> T[] getEventsOfType(Class<T> clazz) {
 		List<T> ret = new ArrayList<T>();
-		for (Event event : events) {
+		for (Event<?> event : events) {
 			if (clazz.isInstance(event)) {
 				ret.add((T)event);
 			}
@@ -35,8 +35,9 @@ public abstract class Component implements ISerializable {
 		return (T[])ret.toArray();
 	}
 	
-	public void bindEvent(Event e) {
+	public void bindEvent(Event<?> e) {
 		events.add(e);
+		e.setParent(this);
 	}
 	
 	public Class<? extends Component>[] getDependencies() {
@@ -44,7 +45,7 @@ public abstract class Component implements ISerializable {
 	}
 	
 	public void update() {
-		for (Event e : this.getEvents()) {
+		for (Event<?> e : this.getEvents()) {
 			if(e instanceof UpdateEvent)
 				((UpdateEvent)e).fire(null);
 		}

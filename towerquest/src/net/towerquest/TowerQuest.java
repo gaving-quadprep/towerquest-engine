@@ -8,6 +8,7 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 import net.towerquest.entity.Entity;
+import net.towerquest.entity.components.PositionComponent;
 import net.towerquest.map.Level;
 import net.towerquest.util.Logger;
  
@@ -27,8 +28,18 @@ public class TowerQuest {
 	int fps;
 	/** last fps time */
 	long lastFPS;
+	
+	
+	// private and not static, not making that mistake again
+	private Level level;
  
 	public void start() {
+		// delete later
+		level = new Level();
+		Entity entity = new Entity();
+		entity.addComponent(new PositionComponent());
+		level.addEntity(entity);
+		
 		try {
 			Display.setDisplayMode(new DisplayMode(640, 480));
 			Display.create();
@@ -76,6 +87,8 @@ public class TowerQuest {
 		if (x > 640) x = 640;
 		if (y < 0) y = 0;
 		if (y > 480) y = 480;
+		
+		level.update(1 / 60f);
 		
 		updateFPS(); // update FPS Counter
 	}
@@ -148,8 +161,6 @@ public class TowerQuest {
 	 
 	public static void main(String[] argv) {
 		Logger.instance.log("Game started");
-		Level level = new Level();
-		Entity e = new Entity();
 		
 		TowerQuest towerQuest = new TowerQuest();
 		towerQuest.start();

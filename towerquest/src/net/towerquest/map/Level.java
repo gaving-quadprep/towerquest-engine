@@ -11,6 +11,7 @@ import net.towerquest.save.SerializedData;
 
 public class Level implements WorldRenderable, ISerializable {
 	private List<Entity> entities = new ArrayList<Entity>();
+	
 	@Override
 	public void render(WorldRenderer wr) {
 		// TODO Auto-generated method stub
@@ -19,6 +20,13 @@ public class Level implements WorldRenderable, ISerializable {
 		}
 	}
 	
+	public void update(double delta) {
+		for (Entity e : entities) {
+			e.update();
+		}
+	}
+	
+	// must be updated
 	public void addEntity(Entity e) {
 		entities.add(e);
 		e.setLevel(this);

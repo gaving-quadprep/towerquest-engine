@@ -4,7 +4,7 @@ package net.towerquest.util;
 
 public class Logger {
 	private final long startTime;
-	private boolean showLineNumber = true;
+	public boolean showLineNumber = true;
 	public static final Logger instance = new Logger();
 	public Logger() {
 		startTime = System.nanoTime();

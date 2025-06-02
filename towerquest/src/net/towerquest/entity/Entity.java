@@ -41,7 +41,6 @@ public class Entity implements ISerializable, WorldRenderable {
 	}
 	
 	public void addComponent(Component c) {
-		
 		components.add(c);
 		c.setParent(this);
 	}

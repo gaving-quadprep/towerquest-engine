@@ -26,8 +26,11 @@ public abstract class Event<T> {
 	//public static enum 
 	
 	public void fire(T arg) {
-		if(this.condition.apply(arg))
-			Logger.instance.log("Event fired! (" + this.getClass().getName() + ", " + this.parent.getClass().getName());
+		if(this.condition.apply(arg)) {
+			Logger.instance.log("Event fired! (" + this.getClass().getSimpleName() + ", " + this.parent.getClass().getSimpleName());
 			fn.accept(arg);
+		} else {
+			
+		}
 	}
 }
