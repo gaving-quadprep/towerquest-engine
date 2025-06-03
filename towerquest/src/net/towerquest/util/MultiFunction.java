@@ -2,8 +2,9 @@ package net.towerquest.util;
 
 /**
  * 
- * @see java.util.Function
+ * i dont know how to java
  * 
+ * @see java.util.Function
  * @param <R> the type of the result of the function
  */
 

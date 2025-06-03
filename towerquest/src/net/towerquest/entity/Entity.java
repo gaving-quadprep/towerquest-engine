@@ -26,6 +26,7 @@ public class Entity implements ISerializable, WorldRenderable {
 		}
 	}
 	
+	// TODO make it use delta
 	public void update() {
 		for (Component c : components) {
 			c.update();

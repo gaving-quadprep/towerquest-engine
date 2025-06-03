@@ -1,6 +1,12 @@
 package net.towerquest.save;
 
 public interface ISerializable {
-	public SerializedData serialize();
-	public void deserialize(SerializedData sd);
+	public default SerializedData serialize() {
+		SerializedData sd = new SerializedData();
+		
+		return sd;
+	}
+	public default void deserialize(SerializedData sd) {
+		
+	}
 }

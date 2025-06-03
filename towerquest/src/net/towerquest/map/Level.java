@@ -26,7 +26,7 @@ public class Level implements WorldRenderable, ISerializable {
 		}
 	}
 	
-	// must be updated
+	// TODO must be updated
 	public void addEntity(Entity e) {
 		entities.add(e);
 		e.setLevel(this);
@@ -34,7 +34,8 @@ public class Level implements WorldRenderable, ISerializable {
 
 	@Override
 	public SerializedData serialize() {
-		// TODO Auto-generated method stub
+		// TODO do the thing
+		// or dont
 		return null;
 	}
 

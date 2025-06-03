@@ -7,14 +7,14 @@ import net.towerquest.event.UpdateEvent;
 public class PositionComponent extends Component {
 	public PositionComponent() {
 		super();
-		//temporary, delete
+		// TODO temporary, delete
 		this.bindEvent(new UpdateEvent(this::update, (v) -> true));
 	}
 	@SerializeMe
 	public double x;
 	@SerializeMe
 	public double y;
-	// also temporary
+	// TODO also temporary
 	public void update(Void v) {
 		
 	}
