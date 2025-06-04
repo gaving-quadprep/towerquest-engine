@@ -8,8 +8,10 @@ import org.lwjgl.opengl.DisplayMode;
 import org.lwjgl.opengl.GL11;
 
 import net.towerquest.entity.Entity;
+import net.towerquest.entity.components.EnemyAIComponent;
 import net.towerquest.entity.components.PositionComponent;
 import net.towerquest.map.Level;
+import net.towerquest.save.SerializationUtils;
 import net.towerquest.util.Logger;
  
 public class TowerQuest {
@@ -161,6 +163,9 @@ public class TowerQuest {
 	 
 	public static void main(String[] argv) {
 		Logger.instance.log("Game started");
+		
+		// for testing, delete
+		SerializationUtils.getAllFields(EnemyAIComponent.class);
 		
 		TowerQuest towerQuest = new TowerQuest();
 		towerQuest.start();

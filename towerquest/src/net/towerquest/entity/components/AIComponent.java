@@ -6,6 +6,7 @@ import net.towerquest.save.Pointer;
 import net.towerquest.save.SerializeMe;
 
 public class AIComponent extends Component {
+	// TODO no
 	@SerializeMe
 	@Pointer
 	Entity target;

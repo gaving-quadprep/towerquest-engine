@@ -9,11 +9,13 @@ import net.towerquest.map.Level;
 import net.towerquest.render.WorldRenderable;
 import net.towerquest.render.WorldRenderer;
 import net.towerquest.save.ISerializable;
+import net.towerquest.save.SerializeMe;
 import net.towerquest.save.SerializedData;
 
 public class Entity implements ISerializable, WorldRenderable {
+	@SerializeMe
 	private List<Component> components = new ArrayList<Component>();
-	//private List<Event> events = new ArrayList<Event>();
+	
 	private Level level;
 	
 	@Override

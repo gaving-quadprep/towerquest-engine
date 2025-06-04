@@ -8,12 +8,17 @@ import net.towerquest.event.RenderEvent;
 import net.towerquest.event.UpdateEvent;
 import net.towerquest.render.WorldRenderer;
 import net.towerquest.save.ISerializable;
+import net.towerquest.save.Pointer;
+import net.towerquest.save.SerializeMe;
 import net.towerquest.save.SerializedData;
 
 public abstract class Component implements ISerializable {
+	@SerializeMe
 	private List<Event<?>> events = new ArrayList<Event<?>>();
 	
+	@Pointer
 	private Entity parent;
+	
 	public void setParent(Entity e) {
 		this.parent = e;
 	}
@@ -21,6 +26,7 @@ public abstract class Component implements ISerializable {
 		 return this.parent;
 	}
 	
+	// TODO no
 	public Event[] getEvents() {
 		return events.toArray(new Event[] {});
 	}
@@ -49,19 +55,6 @@ public abstract class Component implements ISerializable {
 			if(e instanceof UpdateEvent)
 				((UpdateEvent)e).fire(null);
 		}
-	}
-
-
-	@Override
-	public SerializedData serialize() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void deserialize(SerializedData sd) {
-		// TODO Auto-generated method stub
-		
 	}
 	
 }
