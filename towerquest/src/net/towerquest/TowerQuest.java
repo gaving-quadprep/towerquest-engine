@@ -141,8 +141,7 @@ public class TowerQuest {
 	public void renderGL() {
 		// Clear The Screen And The Depth Buffer
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
- 
-		// R,G,B,A Set The Color To Blue One Time Only
+		
 		GL11.glColor3f((float) Math.abs(Math.sin((double)System.currentTimeMillis()/1000)), 
 				0.5f, 1.0f);
 
