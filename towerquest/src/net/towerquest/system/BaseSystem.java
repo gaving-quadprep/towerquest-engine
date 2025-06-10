@@ -6,7 +6,7 @@ import java.io.File;
   * <p> i'm trying to do more documentation this time
   * <p> i'm not writing comments on anything where it's really obvious what it does
   */
-public abstract class BaseSystem<WindowType extends Window<ImageType>, RendererType extends Renderer<ImageType>, ImageType extends Image> {
+public abstract class BaseSystem<WindowType extends Window<ImageType, RendererType>, RendererType extends Renderer<ImageType>, ImageType extends Image> {
 	
 	/** Called when the program starts. */
 	public abstract void init();

@@ -8,7 +8,7 @@ import net.towerquest.system.SoundSystem;
 import net.towerquest.system.Window;
 
 public class LWJGLSystem extends BaseSystem<LWJGLWindow, OpenGLRenderer, TextureImage> {
-
+	LWJGLWindow window;
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
@@ -23,8 +23,9 @@ public class LWJGLSystem extends BaseSystem<LWJGLWindow, OpenGLRenderer, Texture
 
 	@Override
 	public LWJGLWindow createWindow(int sizeX, int sizeY, String title) {
-		// TODO Auto-generated method stub
-		return null;
+		if(window == null)
+			window = new LWJGLWindow(sizeY, sizeY, title);
+		return window;
 	}
 
 	@Override
