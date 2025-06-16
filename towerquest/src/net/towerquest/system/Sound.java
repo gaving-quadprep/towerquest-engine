@@ -1,6 +1,6 @@
 package net.towerquest.system;
 
-public abstract class Sound {
+public interface Sound {
 	/** Returns the length in seconds. */
-	public abstract float getLength();
+	public float getLength();
 }

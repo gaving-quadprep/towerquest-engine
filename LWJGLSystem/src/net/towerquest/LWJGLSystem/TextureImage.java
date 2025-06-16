@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 import net.towerquest.system.Image;
 import net.towerquest.util.Color;
 
-public class TextureImage extends Image {
+public class TextureImage implements Image {
 	ByteBuffer imageData;
 	int textureId;
 	int width;

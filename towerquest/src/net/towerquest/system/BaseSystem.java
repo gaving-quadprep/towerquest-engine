@@ -6,17 +6,19 @@ import java.io.File;
   * <p> i'm trying to do more documentation this time
   * <p> i'm not writing comments on anything where it's really obvious what it does
   */
-public abstract class BaseSystem<WindowType extends Window<ImageType, RendererType>, RendererType extends Renderer<ImageType>, ImageType extends Image> {
+public interface BaseSystem<WindowType extends Window<ImageType, RendererType, KeyboardType>, RendererType extends Renderer<ImageType>, ImageType extends Image, KeyboardType extends KeyboardEventHandler> {
 	
 	/** Called when the program starts. */
-	public abstract void init();
+	public void init();
 	/** Exits properly, freeing any resources */
-	public abstract void exit();
-	public abstract WindowType createWindow(int sizeX, int sizeY, String title);
+	public void exit();
+	public WindowType createWindow(int sizeX, int sizeY, String title);
 	/** Creates a blank image */
-	public abstract ImageType createImage(int sizeX, int sizeY);
-	public abstract ImageType loadPNG(File pngFile);
+	public ImageType createImage(int sizeX, int sizeY);
+	public ImageType loadPNG(File pngFile);
 	
 	/** Creates and initializes a sound system. Returns null if sound is not available. */
-	public abstract SoundSystem<?> getSoundSystem();
+	public default SoundSystem<?> getSoundSystem() {
+		return null;
+	}
 }

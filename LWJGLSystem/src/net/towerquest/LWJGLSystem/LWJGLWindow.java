@@ -11,8 +11,9 @@ import org.lwjgl.opengl.DisplayMode;
 import net.towerquest.system.Window;
 import net.towerquest.util.Color;
 
-public class LWJGLWindow extends Window<TextureImage, OpenGLRenderer> {
-	OpenGLRenderer openGlRenderer;
+public class LWJGLWindow implements Window<TextureImage, OpenGLRenderer, LWJGLKeyboard> {
+	OpenGLRenderer renderer;
+	LWJGLKeyboard keyboard;
 	int fpsCap;
 	LWJGLWindow(int width, int height, String title) {
 		try {
@@ -20,7 +21,8 @@ public class LWJGLWindow extends Window<TextureImage, OpenGLRenderer> {
 			Display.create();
 			Display.setTitle(title);
 			
-			openGlRenderer = new OpenGLRenderer(this);
+			renderer = new OpenGLRenderer(this);
+			keyboard = new LWJGLKeyboard();
 		} catch (LWJGLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -43,7 +45,7 @@ public class LWJGLWindow extends Window<TextureImage, OpenGLRenderer> {
 
 	@Override
 	public OpenGLRenderer getRenderer() {
-		return openGlRenderer;
+		return renderer;
 	}
 	
 	@Override
@@ -62,5 +64,15 @@ public class LWJGLWindow extends Window<TextureImage, OpenGLRenderer> {
 	@Override
 	public void setVSync(boolean vSync) {
 		Display.setVSyncEnabled(vSync);
+	}
+	
+	@Override
+	public void sync() {
+		Display.sync(fpsCap);
+	}
+	
+	@Override
+	public LWJGLKeyboard getKeyboardEventHandler() {
+		return keyboard;
 	}
 }

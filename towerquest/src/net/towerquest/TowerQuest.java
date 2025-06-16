@@ -78,6 +78,14 @@ public class TowerQuest {
 		// rotate quad
 		rotation += (0.5f * delta);
 		
+		Keyboard.poll();
+		
+		while (Keyboard.next()) {
+			System.out.print(String.format("0x%02X", Keyboard.getEventKey()));
+			System.out.print(':');
+			System.out.println(Keyboard.getEventCharacter());
+		}
+		
 		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.35f * delta;
 		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.35f * delta;
 		 

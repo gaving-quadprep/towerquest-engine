@@ -2,17 +2,17 @@ package net.towerquest.system;
 
 import net.towerquest.util.Color;
 
-public abstract class Image {
+public interface Image {
 	// TODO good way of distinguishing between transparent and opaque images, and different color formats
-	public abstract int getWidth();
-	public abstract int getHeight();
+	public int getWidth();
+	public int getHeight();
 	/** this refers to bits per pixel, not bytes */
-	public abstract int getBPP();
-	public abstract boolean supportsTransparency();
+	public int getBPP();
+	public boolean supportsTransparency();
 	
-	public abstract Color getColorAt(int x, int y);
-	public abstract void setColorAt(int x, int y, Color color);
+	public Color getColorAt(int x, int y);
+	public void setColorAt(int x, int y, Color color);
 	
 	/** this should always use nearest neighbor when scaling up */
-	public abstract Image getScaledImage(int newWidth, int newHeight);
+	public Image getScaledImage(int newWidth, int newHeight);
 }

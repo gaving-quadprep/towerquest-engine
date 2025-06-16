@@ -7,7 +7,7 @@ import org.lwjgl.opengl.GL11;
 import net.towerquest.system.Renderer;
 import net.towerquest.util.Color;
 
-public class OpenGLRenderer extends Renderer<TextureImage> {
+public class OpenGLRenderer implements Renderer<TextureImage> {
 	OpenGLRenderer(LWJGLWindow parent) {
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
@@ -23,8 +23,6 @@ public class OpenGLRenderer extends Renderer<TextureImage> {
 
 	@Override
 	public void drawImage(TextureImage im, int x, int y, int w, int h) {
-		// TODO Auto-generated method stub
-
 		glColor3f(1, 1, 1);
 		glBindTexture(GL_TEXTURE_2D, im.textureId);
 		glBegin(GL_QUADS);

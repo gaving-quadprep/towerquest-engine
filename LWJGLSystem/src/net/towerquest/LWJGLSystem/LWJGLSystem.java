@@ -4,10 +4,11 @@ import java.io.File;
 
 import net.towerquest.system.BaseSystem;
 import net.towerquest.system.Image;
+import net.towerquest.system.KeyboardEventHandler;
 import net.towerquest.system.SoundSystem;
 import net.towerquest.system.Window;
 
-public class LWJGLSystem extends BaseSystem<LWJGLWindow, OpenGLRenderer, TextureImage> {
+public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, TextureImage, LWJGLKeyboard> {
 	LWJGLWindow window;
 	@Override
 	public void init() {
