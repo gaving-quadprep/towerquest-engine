@@ -12,7 +12,12 @@ import net.towerquest.entity.components.EnemyAIComponent;
 import net.towerquest.entity.components.PositionComponent;
 import net.towerquest.map.Level;
 import net.towerquest.save.SerializationUtils;
+import net.towerquest.system.BaseSystem;
+import net.towerquest.system.Renderer;
+import net.towerquest.system.Window;
 import net.towerquest.util.Logger;
+
+import net.towerquest.LWJGLSystem.LWJGLSystem;
  
 public class TowerQuest {
 	
@@ -34,6 +39,8 @@ public class TowerQuest {
 	
 	// private and not static, not making that mistake again
 	private Level level;
+	
+	private BaseSystem<?, ?, ?, ?> system = new LWJGLSystem();
  
 	public void start() {
 		// delete later
@@ -42,21 +49,15 @@ public class TowerQuest {
 		entity.addComponent(new PositionComponent());
 		level.addEntity(entity);
 		
-		try {
-			Display.setDisplayMode(new DisplayMode(640, 480));
-			Display.create();
-			Display.setTitle("TowerQuest");
-			//Display.setIcon()
-		} catch (LWJGLException e) {
-			e.printStackTrace();
-			System.exit(0);
-		}
+		system.init();
+		
+		Window window = system.createWindow(640, 480, "TowerQuest");
 		Logger.instance.log("Window Created");
  
-		initGL(); // init OpenGL
+		Renderer renderer = window.getRenderer();
 		Logger.instance.log("OpenGL initialized");
 		getDelta(); // call once before loop to initialise lastFrame
-		lastFPS = getTime(); // call before loop to initialise fps timer
+		lastFPS = getTimeInMilliseconds(); // call before loop to initialise fps timer
  
 		while (!Display.isCloseRequested()) {
 			int delta = getDelta();
@@ -110,7 +111,7 @@ public class TowerQuest {
 	 * @return milliseconds passed since last frame 
 	 */
 	public int getDelta() {
-		long time = getTime();
+		long time = getTimeInMilliseconds();
 		int delta = (int) (time - lastFrame);
 		lastFrame = time;
 	  
@@ -122,7 +123,7 @@ public class TowerQuest {
 	 * 
 	 * @return The system time in milliseconds
 	 */
-	public long getTime() {
+	public long getTimeInMilliseconds() {
 		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
 	}
 	 
@@ -130,7 +131,7 @@ public class TowerQuest {
 	 * Calculate the FPS and set it in the title bar
 	 */
 	public void updateFPS() {
-		if (getTime() - lastFPS > 1000) {
+		if (getTimeInMilliseconds() - lastFPS > 1000) {
 			Logger.instance.log("FPS: " + fps);
 			//Display.setTitle("FPS: " + fps);
 			fps = 0;
