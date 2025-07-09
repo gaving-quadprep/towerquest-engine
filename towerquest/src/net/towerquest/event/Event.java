@@ -4,8 +4,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import net.towerquest.entity.Component;
-import net.towerquest.entity.Entity;
-import net.towerquest.util.Logger;
 
 public abstract class Event<T> {
 	private Component parent;

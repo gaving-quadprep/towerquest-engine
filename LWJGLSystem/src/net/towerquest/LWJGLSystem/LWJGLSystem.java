@@ -1,9 +1,19 @@
 package net.towerquest.LWJGLSystem;
 
+import java.awt.Graphics;
+import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
+import java.awt.image.ColorModel;
+import java.awt.image.ComponentColorModel;
+import java.awt.image.DataBuffer;
+import java.awt.image.DataBufferByte;
+import java.awt.image.Raster;
+import java.awt.image.WritableRaster;
 import java.io.File;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.util.Hashtable;
 
 import net.towerquest.system.BaseSystem;
 import net.towerquest.system.Image;
@@ -13,6 +23,19 @@ import net.towerquest.system.Window;
 
 public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, TextureImage, LWJGLKeyboard> {
 	LWJGLWindow window;
+	private static final ColorModel glAlphaColorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB),
+            new int[] {8,8,8,8},
+            true,
+            false,
+            ComponentColorModel.TRANSLUCENT,
+            DataBuffer.TYPE_BYTE);
+
+	private static final ColorModel glColorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB),
+            new int[] {8,8,8,0},
+            false,
+            false,
+            ComponentColorModel.OPAQUE,
+            DataBuffer.TYPE_BYTE);
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
@@ -37,7 +60,7 @@ public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, Text
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public ByteBuffer convertImageData(BufferedImage bufferedImage, Texture texture) {
+	public ByteBuffer convertImageData(BufferedImage bufferedImage) {
         ByteBuffer imageBuffer;
         WritableRaster raster;
         BufferedImage texImage;
@@ -54,9 +77,6 @@ public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, Text
             texHeight *= 2;
         }
  
-        texture.setTextureHeight(texHeight);
-        texture.setTextureWidth(texWidth);
- 
         // create a raster that can be used by OpenGL as a source
         // for a texture
         if (bufferedImage.getColorModel().hasAlpha()) {
@@ -69,7 +89,7 @@ public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, Text
  
         // copy the source image into the produced image
         Graphics g = texImage.getGraphics();
-        g.setColor(new Color(0f,0f,0f,0f));
+        g.setColor(new java.awt.Color(0f,0f,0f,0f));
         g.fillRect(0,0,texWidth,texHeight);
         g.drawImage(bufferedImage,0,0,null);
  
@@ -89,10 +109,11 @@ public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, Text
 	public TextureImage loadPNG(InputStream pngFile) {
 		BufferedImage bufferedImage;
 		try {
-			
+			//ByteBuffer bb = 
 		} catch (Exception e) {
 			return null;
 		}
+		return null;
 	}
 
 	@Override

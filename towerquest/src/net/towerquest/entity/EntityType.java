@@ -1,7 +1,6 @@
 package net.towerquest.entity;
 
 import java.lang.reflect.Method;
-import java.util.function.Function;
 
 /**
  * A class that allows for creating many entities from a template, like how classes worked in the last engine.

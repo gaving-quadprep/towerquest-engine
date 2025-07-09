@@ -1,6 +1,5 @@
 package net.towerquest.system;
 
-import java.io.File;
 import java.io.InputStream;
 
 /** this provides an abstract library for doing stuff like window creation, the generics are so that things like images don't have to be cast constantly

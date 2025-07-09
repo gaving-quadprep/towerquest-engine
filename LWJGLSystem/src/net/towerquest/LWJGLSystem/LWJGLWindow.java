@@ -2,14 +2,11 @@ package net.towerquest.LWJGLSystem;
 
 import java.nio.ByteBuffer;
 
-import javax.swing.Renderer;
-
 import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
 import net.towerquest.system.Window;
-import net.towerquest.util.Color;
 
 public class LWJGLWindow implements Window<TextureImage, OpenGLRenderer, LWJGLKeyboard> {
 	OpenGLRenderer renderer;

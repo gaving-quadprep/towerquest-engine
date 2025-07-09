@@ -4,13 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.towerquest.event.Event;
-import net.towerquest.event.RenderEvent;
 import net.towerquest.event.UpdateEvent;
-import net.towerquest.render.WorldRenderer;
 import net.towerquest.save.ISerializable;
-import net.towerquest.save.Pointer;
 import net.towerquest.save.SerializeMe;
-import net.towerquest.save.SerializedData;
+import net.towerquest.save.Pointer;
 
 public abstract class Component implements ISerializable {
 	@SerializeMe
