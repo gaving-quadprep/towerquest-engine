@@ -6,10 +6,12 @@ import java.util.List;
 import net.towerquest.entity.Entity;
 import net.towerquest.render.WorldRenderable;
 import net.towerquest.render.WorldRenderer;
-import net.towerquest.save.ISerializable;
-import net.towerquest.save.SerializedData;
+import net.towerquest.serialization.Deserializer;
+import net.towerquest.serialization.Serializable;
+import net.towerquest.serialization.SerializedData;
+import net.towerquest.serialization.Serializer;
 
-public class Level implements WorldRenderable, ISerializable {
+public class Level implements WorldRenderable, Serializable {
 	private List<Entity> entities = new ArrayList<Entity>();
 	
 	@Override
@@ -33,14 +35,14 @@ public class Level implements WorldRenderable, ISerializable {
 	}
 
 	@Override
-	public SerializedData serialize() {
+	public SerializedData serialize(Serializer serializer) {
 		// TODO do the thing
 		// or dont
 		return null;
 	}
 
 	@Override
-	public void deserialize(SerializedData sd) {
+	public void deserialize(SerializedData sd, Deserializer desesrializer) {
 		// TODO Auto-generated method stub
 		
 	}

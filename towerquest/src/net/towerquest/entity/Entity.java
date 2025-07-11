@@ -8,14 +8,13 @@ import net.towerquest.event.RenderEvent;
 import net.towerquest.map.Level;
 import net.towerquest.render.WorldRenderable;
 import net.towerquest.render.WorldRenderer;
-import net.towerquest.save.ISerializable;
-import net.towerquest.save.SerializeMe;
-import net.towerquest.save.SerializedData;
+import net.towerquest.serialization.Serializable;
+import net.towerquest.serialization.Transient;
 
-public class Entity implements ISerializable, WorldRenderable {
-	@SerializeMe
+public class Entity implements Serializable, WorldRenderable {
 	private List<Component> components = new ArrayList<Component>();
 	
+	@Transient
 	private Level level;
 	
 	@Override
@@ -58,21 +57,4 @@ public class Entity implements ISerializable, WorldRenderable {
 		}
 		return null;
 	}
-
-	@Override
-	public SerializedData serialize() {
-		// TODO Auto-generated method stub
-		SerializedData sd = new SerializedData();
-		for(Component c : components)
-			c.serialize();
-		
-		return sd;
-	}
-
-	@Override
-	public void deserialize(SerializedData sd) {
-		// TODO Auto-generated method stub
-		
-	}
-	
 }

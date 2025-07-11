@@ -1,7 +1,6 @@
 package net.towerquest.util;
 
-import net.towerquest.save.ISerializable;
-import net.towerquest.save.SerializeAll;
+import net.towerquest.serialization.Serializable;
 
 /**
  * 
@@ -9,8 +8,7 @@ import net.towerquest.save.SerializeAll;
  *
  */
 
-@SerializeAll
-public class Color implements ISerializable {
+public class Color implements Serializable {
 	// i would use byte but java can't have unsigned values
 	// which is stupid, because why would you want a SIGNED byte
 	// i can't think of any situation where you would use something with such a small data range

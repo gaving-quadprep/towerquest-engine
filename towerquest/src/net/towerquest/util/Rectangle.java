@@ -1,10 +1,8 @@
 package net.towerquest.util;
 
-import net.towerquest.save.ISerializable;
-import net.towerquest.save.SerializeAll;
+import net.towerquest.serialization.Serializable;
 
-@SerializeAll
-public class Rectangle implements ISerializable {
+public class Rectangle implements Serializable {
 	public double x;
 	public double y;
 	public double width;

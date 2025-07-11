@@ -5,13 +5,11 @@ import java.util.List;
 
 import net.towerquest.event.Event;
 import net.towerquest.event.UpdateEvent;
-import net.towerquest.save.ISerializable;
-import net.towerquest.save.SerializeMe;
-import net.towerquest.save.Pointer;
+import net.towerquest.serialization.Pointer;
+import net.towerquest.serialization.Serializable;
 
-public abstract class Component implements ISerializable {
-	@SerializeMe
-	private List<Event<?>> events = new ArrayList<Event<?>>();
+public abstract class Component implements Serializable {
+	private List<Event> events = new ArrayList<Event>();
 	
 	@Pointer
 	private Entity parent;

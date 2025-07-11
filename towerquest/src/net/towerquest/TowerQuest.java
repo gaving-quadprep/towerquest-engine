@@ -9,7 +9,6 @@ import net.towerquest.entity.Entity;
 import net.towerquest.entity.components.EnemyAIComponent;
 import net.towerquest.entity.components.PositionComponent;
 import net.towerquest.map.Level;
-import net.towerquest.save.SerializationUtils;
 import net.towerquest.system.BaseSystem;
 import net.towerquest.system.Renderer;
 import net.towerquest.system.Window;
@@ -169,9 +168,6 @@ public class TowerQuest {
 	 
 	public static void main(String[] argv) {
 		Logger.instance.log("Game started");
-		
-		// for testing, delete
-		SerializationUtils.getAllFields(EnemyAIComponent.class);
 		
 		TowerQuest towerQuest = new TowerQuest();
 		towerQuest.start();
