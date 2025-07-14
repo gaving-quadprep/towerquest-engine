@@ -9,13 +9,11 @@ import net.towerquest.map.Level;
 import net.towerquest.render.WorldRenderable;
 import net.towerquest.render.WorldRenderer;
 import net.towerquest.serialization.Serializable;
-import net.towerquest.serialization.Transient;
 
 public class Entity implements Serializable, WorldRenderable {
 	private List<Component> components = new ArrayList<Component>();
-	
-	@Transient
-	private Level level;
+
+	private transient Level level;
 	
 	@Override
 	public void render(WorldRenderer wr) {

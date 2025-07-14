@@ -6,7 +6,6 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 import net.towerquest.entity.Entity;
-import net.towerquest.entity.components.EnemyAIComponent;
 import net.towerquest.entity.components.PositionComponent;
 import net.towerquest.map.Level;
 import net.towerquest.system.BaseSystem;
