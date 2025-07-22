@@ -9,17 +9,13 @@ import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferByte;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
-import java.io.File;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.Hashtable;
 
 import net.towerquest.system.BaseSystem;
-import net.towerquest.system.Image;
-import net.towerquest.system.KeyboardEventHandler;
 import net.towerquest.system.SoundSystem;
-import net.towerquest.system.Window;
 
 public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, TextureImage, LWJGLKeyboard> {
 	LWJGLWindow window;
