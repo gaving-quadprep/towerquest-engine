@@ -9,6 +9,7 @@ import net.towerquest.render.WorldRenderer;
 import net.towerquest.serialization.Deserializer;
 import net.towerquest.serialization.Serializable;
 import net.towerquest.serialization.SerializedData;
+import net.towerquest.serialization.SerializedDataType;
 import net.towerquest.serialization.Serializer;
 
 public class Level implements WorldRenderable, Serializable {
@@ -24,7 +25,7 @@ public class Level implements WorldRenderable, Serializable {
 	
 	public void update(double delta) {
 		for (Entity e : entities) {
-			e.update();
+			e.update(delta);
 		}
 	}
 	
@@ -32,19 +33,6 @@ public class Level implements WorldRenderable, Serializable {
 	public void addEntity(Entity e) {
 		entities.add(e);
 		e.setLevel(this);
-	}
-
-	@Override
-	public SerializedData serialize(Serializer serializer) {
-		// TODO do the thing
-		// or dont
-		return null;
-	}
-
-	@Override
-	public void deserialize(SerializedData sd, Deserializer desesrializer) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }

@@ -45,10 +45,10 @@ public abstract class Component implements Serializable {
 		return new Class[] {};
 	}
 	
-	public void update() {
+	public void update(double delta) {
 		for (Event<?> e : this.getEvents()) {
 			if(e instanceof UpdateEvent)
-				((UpdateEvent)e).fire(null);
+				((UpdateEvent)e).fire(delta);
 		}
 	}
 	
