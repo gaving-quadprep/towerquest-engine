@@ -1,16 +1,14 @@
 package net.towerquest.util;
 
-public final class ClassRegistry<T> extends Registry<Class<? extends T>> {
-	public T createByName(String name, @SuppressWarnings("rawtypes") Class[] paramc, Object[] param) {
+import java.lang.reflect.InvocationTargetException;
+
+public class ClassRegistry<T> extends Registry<Class<? extends T>> {
+	public T createByName(String name, Class<?>[] paramc, Object[] param) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException {
 		T t = null;
 
-		try {
-			Class<? extends T> clazz = this.get(name);
-			if(clazz != null) {
-				t = (T)clazz.getConstructor(paramc).newInstance(param);
-			}
-		} catch (Exception e2) {
-			e2.printStackTrace();
+		Class<? extends T> clazz = this.get(name);
+		if(clazz != null) {
+			t = (T)clazz.getConstructor(paramc).newInstance(param);
 		}
 
 		return t;
