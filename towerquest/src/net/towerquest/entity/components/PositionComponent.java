@@ -7,12 +7,8 @@ public class PositionComponent extends Component {
 	public PositionComponent() {
 		super();
 		// TODO temporary, delete
-		this.bindEvent(new UpdateEvent(this::update, (v) -> true));
+		//this.bindEvent(new UpdateEvent(this::update, (v) -> true));
 	}
 	public double x;
 	public double y;
-	// TODO also temporary
-	public void update(Void v) {
-		
-	}
 }

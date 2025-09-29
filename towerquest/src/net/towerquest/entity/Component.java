@@ -41,10 +41,6 @@ public abstract class Component implements Serializable {
 		e.setParent(this);
 	}
 	
-	public Class<? extends Component>[] getDependencies() {
-		return new Class[] {};
-	}
-	
 	public void update(double delta) {
 		for (Event<?> e : this.getEvents()) {
 			if(e instanceof UpdateEvent)

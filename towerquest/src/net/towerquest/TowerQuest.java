@@ -6,6 +6,7 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 import net.towerquest.entity.Entity;
+import net.towerquest.entity.components.CollisionComponent;
 import net.towerquest.entity.components.PositionComponent;
 import net.towerquest.map.Level;
 import net.towerquest.system.BaseSystem;
@@ -43,6 +44,7 @@ public class TowerQuest {
 		level = new Level();
 		Entity entity = new Entity();
 		entity.addComponent(new PositionComponent());
+		entity.addComponent(new CollisionComponent());
 		level.addEntity(entity);
 		
 		system.init();
