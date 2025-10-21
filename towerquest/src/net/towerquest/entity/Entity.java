@@ -64,15 +64,23 @@ public class Entity implements Serializable, WorldRenderable {
 		components.add(c);
 		c.setParent(this);
 	}
-	
+
 	public <T extends Component> T getComponent(Class<T> clazz) {
-		List<T> ret = new ArrayList<T>();
-		
 		for (Component c : components) {
 			if (clazz.isInstance(c))
 				return (T)c;
 			
 		}
 		return null;
+	}
+	public <T extends Component> List<T> getComponents(Class<T> clazz) {
+		List<T> ret = new ArrayList<T>();
+		
+		for (Component c : components) {
+			if (clazz.isInstance(c))
+				ret.add((T) c);
+			
+		}
+		return ret;
 	}
 }

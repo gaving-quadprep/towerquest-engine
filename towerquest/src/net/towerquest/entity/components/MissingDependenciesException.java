@@ -2,6 +2,8 @@ package net.towerquest.entity.components;
 
 import java.lang.RuntimeException;
 
+import net.towerquest.entity.Component;
+
 public class MissingDependenciesException extends RuntimeException {
 
 	public MissingDependenciesException() {
@@ -9,6 +11,9 @@ public class MissingDependenciesException extends RuntimeException {
 	}
 	public MissingDependenciesException(String name) {
 		super(name);
+	}
+	public MissingDependenciesException(Class<? extends Component> clazz) {
+		this(clazz.getName());
 	}
 
 	/**

@@ -5,7 +5,7 @@ import net.towerquest.entity.Component;
 
 @DependsOn(PositionComponent.class)
 public class CollisionComponent extends Component {
-	public Rectangle hitbox;
+	public Rectangle[] hitboxes;
 	
 	public CollisionComponent() {
 		super();
