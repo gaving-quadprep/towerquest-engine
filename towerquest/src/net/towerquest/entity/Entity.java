@@ -51,14 +51,14 @@ public class Entity implements Serializable, WorldRenderable {
 				for (Component c2 : components) {
 					if (d.isInstance(c2)) {
 						hasDependency = true;
-						Logger.instance.log(c2.getClass().getName() + " is an instance of " + d.getName());
+						Logger.instance.log(c2.getClass().getSimpleName() + " is an instance of " + d.getSimpleName());
 					}
 				}
 				if (!hasDependency)
 					throw new MissingDependenciesException(d.getName());
 			}
 		} else {
-			Logger.instance.log("no deps for "+c.getClass().getName());
+			Logger.instance.log("no deps for "+c.getClass().getSimpleName());
 		}
 		
 		components.add(c);
