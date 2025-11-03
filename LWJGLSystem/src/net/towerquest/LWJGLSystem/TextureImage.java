@@ -13,6 +13,15 @@ public class TextureImage implements Image {
 	int width;
 	int height;
 	int pixelFormat = GL11.GL_RGBA;
+
+	TextureImage() {
+		this(LWJGLSystem.instance.createTextureID());
+	}
+	
+	TextureImage(int textureId) {
+		this.textureId = textureId;
+	}
+	
 	@Override
 	public int getWidth() {
 		return width;
@@ -21,6 +30,10 @@ public class TextureImage implements Image {
 	@Override
 	public int getHeight() {
 		return height;
+	}
+
+	public int getTextureId() {
+		return textureId;
 	}
 
 	@Override
@@ -33,13 +46,16 @@ public class TextureImage implements Image {
 	public int getBPP() {
 		switch(this.pixelFormat) {
 		case GL11.GL_R3_G3_B2:
+		case GL11.GL_RGBA2:
 			return 8;
 		case GL11.GL_RGB5_A1:
+		case GL11.GL_RGBA4:
 			return 16;
 		case GL11.GL_RGB8:
 			return 24;
+		case GL11.GL_RGBA16:
+			return 64;
 		case GL11.GL_RGBA8:
-			return 32;
 		default:
 			return 32;
 		}
@@ -63,7 +79,7 @@ public class TextureImage implements Image {
 	}
 
 	@Override
-	public Image getScaledImage(int newWidth, int newHeight) {
+	public TextureImage getScaledImage(int newWidth, int newHeight) {
 		ByteBuffer b = ByteBuffer.allocate(newWidth * newHeight * 4);
 		float widthRatio = ((float) width) / ((float) newWidth);
 		float heightRatio = ((float) height) / ((float) newHeight);

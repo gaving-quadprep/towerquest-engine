@@ -12,13 +12,21 @@ import java.awt.image.WritableRaster;
 import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
+import java.nio.IntBuffer;
 import java.util.Hashtable;
+
+import javax.imageio.ImageIO;
+
+import org.lwjgl.BufferUtils;
+import org.lwjgl.opengl.GL11;
 
 import net.towerquest.system.BaseSystem;
 import net.towerquest.system.SoundSystem;
 
 public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, TextureImage, LWJGLKeyboard> {
 	LWJGLWindow window;
+	static LWJGLSystem instance;
+	private IntBuffer textureIDBuffer = BufferUtils.createIntBuffer(1);
 	private static final ColorModel glAlphaColorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB),
             new int[] {8,8,8,8},
             true,
@@ -32,6 +40,15 @@ public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, Text
             false,
             ComponentColorModel.OPAQUE,
             DataBuffer.TYPE_BYTE);
+	int createTextureID() {
+		GL11.glGenTextures(textureIDBuffer);
+		return textureIDBuffer.get(0);
+	}
+	
+	public LWJGLSystem() {
+		instance = this;
+	}
+	
 	@Override
 	public void init() {
 		// TODO Auto-generated method stub
@@ -105,11 +122,35 @@ public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, Text
 	public TextureImage loadPNG(InputStream pngFile) {
 		BufferedImage bufferedImage;
 		try {
-			//ByteBuffer bb = 
+			bufferedImage = ImageIO.read(pngFile);
+			
+			TextureImage texture = new TextureImage();
+			texture.width = bufferedImage.getWidth();
+			texture.height = bufferedImage.getHeight();
+			if (bufferedImage.getColorModel().hasAlpha()) {
+				texture.pixelFormat = GL11.GL_RGBA8;
+			} else {
+				texture.pixelFormat = GL11.GL_RGB8;
+			}
+
+			texture.imageData = convertImageData(bufferedImage);
+			
+			//still unfinished (i copied the one for the lwjgl example because i cant figure out how textures work)
+			glTexImage2D(GL11.GL_TEXTURE_2D,
+                    0,
+                    dstPixelFormat,
+                    get2Fold(bufferedImage.getWidth()),
+                    get2Fold(bufferedImage.getHeight()),
+                    0,
+                    srcPixelFormat,
+                    GL11.GL_UNSIGNED_BYTE,
+                    texture.imageData);
+			
+			return texture;
+			
 		} catch (Exception e) {
 			return null;
 		}
-		return null;
 	}
 
 	@Override
