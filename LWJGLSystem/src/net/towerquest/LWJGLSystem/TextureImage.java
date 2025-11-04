@@ -13,10 +13,6 @@ public class TextureImage implements Image {
 	int width;
 	int height;
 	int pixelFormat = GL11.GL_RGBA;
-
-	TextureImage() {
-		this(LWJGLSystem.instance.createTextureID());
-	}
 	
 	TextureImage(int textureId) {
 		this.textureId = textureId;
@@ -96,10 +92,8 @@ public class TextureImage implements Image {
 			}
 		}
 		
-		TextureImage image = new TextureImage();
+		TextureImage image = LWJGLSystem.instance.createImage(newWidth, newHeight);
 		image.imageData = b;
-		image.width = newWidth;
-		image.height = newHeight;
 		image.pixelFormat = GL11.GL_RGBA8;
 		return image;
 	}

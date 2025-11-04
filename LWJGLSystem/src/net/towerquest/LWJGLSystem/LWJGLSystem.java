@@ -124,25 +124,27 @@ public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, Text
 		try {
 			bufferedImage = ImageIO.read(pngFile);
 			
-			TextureImage texture = new TextureImage();
+			TextureImage texture = new TextureImage(createTextureID());
+			GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.textureId);
 			texture.width = bufferedImage.getWidth();
 			texture.height = bufferedImage.getHeight();
+			int format;
 			if (bufferedImage.getColorModel().hasAlpha()) {
-				texture.pixelFormat = GL11.GL_RGBA8;
+				format = GL11.GL_RGBA;
 			} else {
-				texture.pixelFormat = GL11.GL_RGB8;
+				format = GL11.GL_RGB;
 			}
 
 			texture.imageData = convertImageData(bufferedImage);
 			
 			//still unfinished (i copied the one for the lwjgl example because i cant figure out how textures work)
-			glTexImage2D(GL11.GL_TEXTURE_2D,
+			GL11.glTexImage2D(GL11.GL_TEXTURE_2D,
                     0,
-                    dstPixelFormat,
+                    format,
                     get2Fold(bufferedImage.getWidth()),
                     get2Fold(bufferedImage.getHeight()),
                     0,
-                    srcPixelFormat,
+                    format,
                     GL11.GL_UNSIGNED_BYTE,
                     texture.imageData);
 			
@@ -152,6 +154,15 @@ public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, Text
 			return null;
 		}
 	}
+	
+	// i stole this from the lwjgl example
+	private static int get2Fold(int fold) {
+        int ret = 2;
+        while (ret < fold) {
+            ret *= 2;
+        }
+        return ret;
+    }
 
 	@Override
 	public SoundSystem<?> getSoundSystem() {
