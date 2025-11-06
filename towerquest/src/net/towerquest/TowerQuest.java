@@ -1,18 +1,19 @@
 package net.towerquest;
 
-import org.lwjgl.Sys;
-import org.lwjgl.input.Keyboard;
-import org.lwjgl.opengl.Display;
-import org.lwjgl.opengl.GL11;
 
 import net.towerquest.entity.Entity;
 import net.towerquest.entity.components.CollisionComponent;
 import net.towerquest.entity.components.PositionComponent;
 import net.towerquest.map.Level;
 import net.towerquest.system.BaseSystem;
+import net.towerquest.system.KeyboardEventHandler;
+import net.towerquest.system.KeyboardEventHandler.KeyCode;
 import net.towerquest.system.Renderer;
 import net.towerquest.system.Window;
+import net.towerquest.util.Color;
 import net.towerquest.util.Logger;
+
+import org.lwjgl.Sys;
 
 import net.towerquest.LWJGLSystem.LWJGLSystem;
  
@@ -33,6 +34,10 @@ public class TowerQuest {
 	/** last fps time */
 	long lastFPS;
 	
+	boolean gameRunning = true;
+	Window window;
+	Renderer renderer;
+	KeyboardEventHandler kbd;
 	
 	// private and not static, not making that mistake again
 	private Level level;
@@ -49,27 +54,28 @@ public class TowerQuest {
 		
 		system.init();
 		
-		Window window = system.createWindow(640, 480, "TowerQuest");
+		window = system.createWindow(640, 480, "TowerQuest");
 		Logger.instance.log("Window Created");
  
-		Renderer renderer = window.getRenderer();
+		renderer = window.getRenderer();
 		Logger.instance.log("OpenGL initialized");
 		getDelta(); // call once before loop to initialise lastFrame
 		lastFPS = getTimeInMilliseconds(); // call before loop to initialise fps timer
+		
+		kbd = window.getKeyboardEventHandler();
  
-		while (!Display.isCloseRequested()) {
+		while (gameRunning) {
 			int delta = getDelta();
 			 
 			update(delta);
-			renderGL();
- 
-			Display.update();
-			Display.sync(maxFPS); // cap fps to 60fps
+			//renderGL();
+			renderer.beginRendering();
+			renderer.endRendering();
 		}
 		
 		Logger.instance.log("Stopping");
  
-		Display.destroy();
+		window.destroy();
 		System.exit(0);
 	}
 	 
@@ -77,19 +83,13 @@ public class TowerQuest {
 		// rotate quad
 		rotation += (0.5f * delta);
 		
-		Keyboard.poll();
+		kbd.update();
 		
-		while (Keyboard.next()) {
-			System.out.print(String.format("0x%02X", Keyboard.getEventKey()));
-			System.out.print(':');
-			System.out.println(Keyboard.getEventCharacter());
-		}
-		
-		if (Keyboard.isKeyDown(Keyboard.KEY_LEFT)) x -= 0.35f * delta;
-		if (Keyboard.isKeyDown(Keyboard.KEY_RIGHT)) x += 0.35f * delta;
+		if (kbd.isKeyDown(KeyCode.KEY_LEFT)) x -= 0.35f * delta;
+		if (kbd.isKeyDown(KeyCode.KEY_RIGHT)) x += 0.35f * delta;
 		 
-		if (Keyboard.isKeyDown(Keyboard.KEY_UP)) y += 0.35f * delta;
-		if (Keyboard.isKeyDown(Keyboard.KEY_DOWN)) y -= 0.35f * delta;
+		if (kbd.isKeyDown(KeyCode.KEY_UP)) y += 0.35f * delta;
+		if (kbd.isKeyDown(KeyCode.KEY_DOWN)) y -= 0.35f * delta;
 		 
 		// keep quad on the screen
 		if (x < 0) x = 0;
@@ -137,19 +137,10 @@ public class TowerQuest {
 		}
 		fps++;
 	}
-	 
-	public void initGL() {
-		GL11.glMatrixMode(GL11.GL_PROJECTION);
-		GL11.glLoadIdentity();
-		GL11.glOrtho(0, 640, 0, 480, 1, -1);
-		GL11.glMatrixMode(GL11.GL_MODELVIEW);
-	}
  
 	public void renderGL() {
-		// Clear The Screen And The Depth Buffer
-		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		
-		GL11.glColor3f((float) Math.abs(Math.sin((double)System.currentTimeMillis()/1000)), 
+		/*GL11.glColor3f((float) Math.abs(Math.sin((double)System.currentTimeMillis()/1000)), 
 				0.5f, 1.0f);
 
 		// draw quad
@@ -164,7 +155,11 @@ public class TowerQuest {
 		GL11.glVertex2f(x + 50, y + 50);
 		GL11.glVertex2f(x - 50, y + 50);
 		GL11.glEnd();
-		GL11.glPopMatrix();
+		GL11.glPopMatrix();*/
+		
+		renderer.beginRendering();
+		renderer.fillRect(new Color(255, 0, 0), (int)x-50,(int)y-50,(int)x+50,(int)y+50);
+		renderer.endRendering();
 	}
 	 
 	public static void main(String[] argv) {

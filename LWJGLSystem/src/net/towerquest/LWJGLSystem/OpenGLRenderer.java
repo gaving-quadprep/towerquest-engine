@@ -8,8 +8,9 @@ import net.towerquest.system.Renderer;
 import net.towerquest.util.Color;
 
 public class OpenGLRenderer implements Renderer<TextureImage> {
+	LWJGLWindow parent;
 	OpenGLRenderer(LWJGLWindow parent) {
-		
+		this.parent = parent;
 		glMatrixMode(GL_PROJECTION);
 		glLoadIdentity();
 		glOrtho(0, parent.getWidth(), 0, parent.getHeight(), 1, -1);

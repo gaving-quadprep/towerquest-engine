@@ -1,7 +1,9 @@
 
 package net.towerquest.LWJGLSystem;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -13,6 +15,7 @@ public class LWJGLKeyboard implements KeyboardEventHandler {
 	private Consumer<KeyCode> onKeyUp = null;
 	private Consumer<KeyCode> onKeyDown = null;
 	private Consumer<Character> onKeyTyped = null;
+	private List<KeyCode> changedKeys = new ArrayList<KeyCode>();
 	Map<Integer, KeyCode> keyCodes = new HashMap<Integer, KeyCode>();
 	public LWJGLKeyboard() {
 		
@@ -65,15 +68,18 @@ public class LWJGLKeyboard implements KeyboardEventHandler {
 	
 	@Override
 	public void update() {
+		changedKeys.clear();
 		Keyboard.poll();
 		while(Keyboard.next()) {
+			int eventKey = Keyboard.getEventKey();
+			changedKeys.add(keyCodes.get(eventKey));
 			if(Keyboard.getEventKeyState()) {
 				if(onKeyDown != null)
-					onKeyDown.accept(keyCodes.get(Keyboard.getEventKey()));
+					onKeyDown.accept(keyCodes.get(eventKey));
 				if(onKeyTyped != null)
 					onKeyTyped.accept(Keyboard.getEventCharacter());
 			} else {
-				onKeyUp.accept(keyCodes.get(Keyboard.getEventKey()));
+				onKeyUp.accept(keyCodes.get(eventKey));
 			}
 		}
 	}
@@ -101,6 +107,11 @@ public class LWJGLKeyboard implements KeyboardEventHandler {
 					return true;
 		}
 		return false;
+	}
+
+	@Override
+	public List<KeyCode> getChangedKeys() {
+		return changedKeys;
 	}
 
 }

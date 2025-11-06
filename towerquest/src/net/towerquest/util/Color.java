@@ -27,8 +27,14 @@ public class Color implements Serializable {
 		this.green = green < 0 ? 256 + green : green;
 		this.blue = blue < 0 ? 256 + blue : blue;
 	}
+	public Color(int red, int green, int blue) {
+		this((byte)red, (byte)green, (byte)blue);
+	}
 	public Color(byte red, byte green, byte blue, byte alpha) {
 		this(red, green, blue);
 		this.alpha = alpha < 0 ? 256 + alpha : alpha;
+	}
+	public Color(int red, int green, int blue, int alpha) {
+		this((byte)red, (byte)green, (byte)blue, (byte)alpha);
 	}
 }
