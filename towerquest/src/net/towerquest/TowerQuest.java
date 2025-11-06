@@ -13,8 +13,6 @@ import net.towerquest.system.Window;
 import net.towerquest.util.Color;
 import net.towerquest.util.Logger;
 
-import org.lwjgl.Sys;
-
 import net.towerquest.LWJGLSystem.LWJGLSystem;
  
 public class TowerQuest {
@@ -43,6 +41,10 @@ public class TowerQuest {
 	private Level level;
 	
 	private BaseSystem<?, ?, ?, ?> system = new LWJGLSystem();
+	
+	private static float getTimeInMilliseconds() {
+		return System.nanoTime() / 1000000.0f;
+	}
  
 	public void start() {
 		// delete later
@@ -68,9 +70,7 @@ public class TowerQuest {
 			int delta = getDelta();
 			 
 			update(delta);
-			//renderGL();
-			renderer.beginRendering();
-			renderer.endRendering();
+			renderGL();
 		}
 		
 		Logger.instance.log("Stopping");
@@ -108,22 +108,12 @@ public class TowerQuest {
 	 * 
 	 * @return milliseconds passed since last frame 
 	 */
-	public int getDelta() {
-		long time = getTimeInMilliseconds();
-		int delta = (int) (time - lastFrame);
-		lastFrame = time;
-	  
-		return delta;
-	}
 	 
 	/**
 	 * Get the accurate system time
 	 * 
 	 * @return The system time in milliseconds
 	 */
-	public long getTimeInMilliseconds() {
-		return (Sys.getTime() * 1000) / Sys.getTimerResolution();
-	}
 	 
 	/**
 	 * Calculate the FPS and set it in the title bar

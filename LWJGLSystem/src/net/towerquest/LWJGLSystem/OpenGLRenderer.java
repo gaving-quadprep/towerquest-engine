@@ -2,6 +2,7 @@ package net.towerquest.LWJGLSystem;
 
 import static org.lwjgl.opengl.GL11.*;
 
+import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 import net.towerquest.system.Renderer;
@@ -69,7 +70,7 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 	@Override
 	public void endRendering() {
 		// TODO Auto-generated method stub
-		
+		Display.update();
 	}
 
 	@Override

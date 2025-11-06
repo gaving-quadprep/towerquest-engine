@@ -72,14 +72,16 @@ public class LWJGLKeyboard implements KeyboardEventHandler {
 		Keyboard.poll();
 		while(Keyboard.next()) {
 			int eventKey = Keyboard.getEventKey();
-			changedKeys.add(keyCodes.get(eventKey));
+			KeyCode keyCode = keyCodes.get(eventKey);
+			changedKeys.add(keyCode);
 			if(Keyboard.getEventKeyState()) {
 				if(onKeyDown != null)
-					onKeyDown.accept(keyCodes.get(eventKey));
+					onKeyDown.accept(keyCode);
 				if(onKeyTyped != null)
 					onKeyTyped.accept(Keyboard.getEventCharacter());
 			} else {
-				onKeyUp.accept(keyCodes.get(eventKey));
+				if(onKeyUp != null)
+					onKeyUp.accept(keyCode);
 			}
 		}
 	}
