@@ -12,6 +12,7 @@ public class LWJGLWindow implements Window<TextureImage, OpenGLRenderer, LWJGLKe
 	OpenGLRenderer renderer;
 	LWJGLKeyboard keyboard;
 	int fpsCap;
+	Runnable onClose;
 	LWJGLWindow(int width, int height, String title) {
 		try {
 			Display.setDisplayMode(new DisplayMode(width, height));
@@ -24,6 +25,14 @@ public class LWJGLWindow implements Window<TextureImage, OpenGLRenderer, LWJGLKe
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@Override
+	public void update() {
+		// TODO Auto-generated method stub
+		Display.update();
+		if(Display.isCloseRequested())
+			onClose.run();
 	}
 
 	@Override	
@@ -72,4 +81,10 @@ public class LWJGLWindow implements Window<TextureImage, OpenGLRenderer, LWJGLKe
 	public LWJGLKeyboard getKeyboardEventHandler() {
 		return keyboard;
 	}
+	
+	@Override
+	public void onWindowClose(Runnable action) {
+		onClose = action;
+	}
+
 }

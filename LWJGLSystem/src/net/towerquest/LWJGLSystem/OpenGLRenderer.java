@@ -70,7 +70,7 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 	@Override
 	public void endRendering() {
 		// TODO Auto-generated method stub
-		Display.update();
+		
 	}
 
 	@Override

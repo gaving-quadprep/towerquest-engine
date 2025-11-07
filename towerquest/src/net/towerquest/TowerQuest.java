@@ -25,12 +25,12 @@ public class TowerQuest {
 	float rotation = 0;
 	 
 	/** time at last frame */
-	long lastFrame;
+	double lastFrame;
 	 
 	/** frames per second */
 	int fps;
 	/** last fps time */
-	long lastFPS;
+	double lastFPS;
 	
 	boolean gameRunning = true;
 	Window window;
@@ -42,8 +42,18 @@ public class TowerQuest {
 	
 	private BaseSystem<?, ?, ?, ?> system = new LWJGLSystem();
 	
-	private static float getTimeInMilliseconds() {
+	private static double getTimeInMilliseconds() {
 		return System.nanoTime() / 1000000.0f;
+	}
+	
+	public double getDelta() {
+		double time = getTimeInMilliseconds();
+
+		double delta = time - lastFrame;
+
+		lastFrame = time;
+		return delta;
+
 	}
  
 	public void start() {
@@ -66,8 +76,10 @@ public class TowerQuest {
 		
 		kbd = window.getKeyboardEventHandler();
  
+		window.onWindowClose(() -> gameRunning = false);
+		
 		while (gameRunning) {
-			int delta = getDelta();
+			double delta = getDelta();
 			 
 			update(delta);
 			renderGL();
@@ -79,7 +91,7 @@ public class TowerQuest {
 		System.exit(0);
 	}
 	 
-	public void update(int delta) {
+	public void update(double delta) {
 		// rotate quad
 		rotation += (0.5f * delta);
 		
@@ -97,7 +109,7 @@ public class TowerQuest {
 		if (y < 0) y = 0;
 		if (y > 480) y = 480;
 		
-		level.update(1 / 60f);
+		level.update(delta);
 		
 		updateFPS(); // update FPS Counter
 	}
@@ -148,8 +160,9 @@ public class TowerQuest {
 		GL11.glPopMatrix();*/
 		
 		renderer.beginRendering();
-		renderer.fillRect(new Color(255, 0, 0), (int)x-50,(int)y-50,(int)x+50,(int)y+50);
+		renderer.fillRect(new Color(255, 0, 0), (int) x - 50,(int) y - 50,(int) x + 50,(int) y + 50);
 		renderer.endRendering();
+		window.update();
 	}
 	 
 	public static void main(String[] argv) {
