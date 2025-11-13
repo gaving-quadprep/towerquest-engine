@@ -43,7 +43,8 @@ public class TowerQuest {
 	private BaseSystem<?, ?, ?, ?> system = new LWJGLSystem();
 	
 	private static double getTimeInMilliseconds() {
-		return System.nanoTime() / 1000000.0f;
+		return ((double)System.nanoTime()) / 1000000.0;
+		//return System.currentTimeMillis();
 	}
 	
 	public double getDelta() {
