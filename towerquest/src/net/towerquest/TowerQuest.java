@@ -6,12 +6,15 @@ import net.towerquest.entity.components.CollisionComponent;
 import net.towerquest.entity.components.PositionComponent;
 import net.towerquest.map.Level;
 import net.towerquest.system.BaseSystem;
+import net.towerquest.system.Image;
 import net.towerquest.system.KeyboardEventHandler;
 import net.towerquest.system.KeyboardEventHandler.KeyCode;
 import net.towerquest.system.Renderer;
 import net.towerquest.system.Window;
 import net.towerquest.util.Color;
 import net.towerquest.util.Logger;
+
+import java.io.FileInputStream;
 
 import net.towerquest.LWJGLSystem.LWJGLSystem;
  
@@ -39,6 +42,8 @@ public class TowerQuest {
 	
 	// private and not static, not making that mistake again
 	private Level level;
+	
+	private Image playerImage;
 	
 	private BaseSystem<?, ?, ?, ?> system = new LWJGLSystem();
 	
@@ -78,6 +83,9 @@ public class TowerQuest {
 		kbd = window.getKeyboardEventHandler();
  
 		window.onWindowClose(() -> gameRunning = false);
+		
+		playerImage = system.loadPNG(TowerQuest.class.getResourceAsStream("/net/towerquest/assets/player.png"));
+		
 		
 		while (gameRunning) {
 			double delta = getDelta();
@@ -162,6 +170,7 @@ public class TowerQuest {
 		
 		renderer.beginRendering();
 		renderer.fillRect(new Color(255, 0, 0), (int) x - 50,(int) y - 50,(int) x + 50,(int) y + 50);
+		renderer.drawTile(playerImage, (int) x - 50,(int) y - 50,(int) x + 50,(int) y + 50, 0, 0, 9, 9);
 		renderer.endRendering();
 		window.update();
 	}

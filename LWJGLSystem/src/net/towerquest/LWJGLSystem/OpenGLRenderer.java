@@ -16,12 +16,13 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 		glLoadIdentity();
 		glOrtho(0, parent.getWidth(), 0, parent.getHeight(), 1, -1);
 		glMatrixMode(GL_MODELVIEW);
+		glEnable(GL_TEXTURE_2D);
 	}
 
 	@Override
 	public void drawImage(TextureImage im, int x, int y) {
 		// TODO Auto-generated method stub
-		
+		drawImage(im, x, y, im.width, im.height);
 	}
 
 	@Override
@@ -29,9 +30,13 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 		glColor3f(1, 1, 1);
 		glBindTexture(GL_TEXTURE_2D, im.textureId);
 		glBegin(GL_QUADS);
+		glTexCoord2f(0.0f, 1.0f);
 		glVertex2f(x, y);
+		glTexCoord2f(1.0f, 1.0f);
 		glVertex2f(x+w, y);
+		glTexCoord2f(1.0f, 0.0f);
 		glVertex2f(x+w, y+h);
+		glTexCoord2f(0.0f, 0.0f);
 		glVertex2f(x, y+h);
 		glEnd();
 	}
@@ -39,8 +44,23 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 	@Override
 	public void drawTile(TextureImage im, int x0, int y0, int x1, int y1, int tilex0, int tiley0, int tilex1,
 			int tiley1) {
-		// TODO Auto-generated method stub
-		
+		// TODO ifx it using the bottom instead of top left as 0,0
+		float scaled_tilex0 = 1 - ((float) tilex0 / (float) im.width);
+		float scaled_tilex1 = 1 - ((float) tilex1 / (float) im.width);
+		float scaled_tiley0 = 1 - ((float) tiley0 / (float) im.height);
+		float scaled_tiley1 = 1 - ((float) tiley1 / (float) im.height);
+		glColor3f(1, 1, 1);
+		glBindTexture(GL_TEXTURE_2D, im.textureId);
+		glBegin(GL_QUADS);
+		glTexCoord2f(scaled_tilex0, scaled_tiley0);
+		glVertex2f(x0, y0);
+		glTexCoord2f(scaled_tilex1, scaled_tiley0);
+		glVertex2f(x1, y0);
+		glTexCoord2f(scaled_tilex1, scaled_tiley1);
+		glVertex2f(x1, y1);
+		glTexCoord2f(scaled_tilex0, scaled_tiley1);
+		glVertex2f(x0, y1);
+		glEnd();
 	}
 
 	@Override
@@ -65,6 +85,7 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 	public void beginRendering() {
 		// TODO Auto-generated method stub
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
+		glLoadIdentity();
 	}
 
 	@Override
