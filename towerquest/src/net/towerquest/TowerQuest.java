@@ -169,8 +169,10 @@ public class TowerQuest {
 		GL11.glPopMatrix();*/
 		
 		renderer.beginRendering();
+		renderer.drawRect(new Color(255, 255, 0), 100, 100, 250, 250);
 		renderer.fillRect(new Color(255, 0, 0), (int) x - 50,(int) y - 50,(int) x + 50,(int) y + 50);
-		renderer.drawTile(playerImage, (int) x - 50,(int) y - 50,(int) x + 50,(int) y + 50, 0, 0, 9, 9);
+		renderer.drawTile(playerImage, (int) x - 10,(int) y - 10,(int) x + 10,(int) y + 10, 0, 0, 32, 32);
+		renderer.drawImage(playerImage, (int) x,(int) y);
 		renderer.endRendering();
 		window.update();
 	}

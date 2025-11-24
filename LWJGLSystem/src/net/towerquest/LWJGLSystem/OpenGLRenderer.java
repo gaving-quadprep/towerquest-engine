@@ -16,7 +16,8 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 		glLoadIdentity();
 		glOrtho(0, parent.getWidth(), 0, parent.getHeight(), 1, -1);
 		glMatrixMode(GL_MODELVIEW);
-		glEnable(GL_TEXTURE_2D);
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
 
 	@Override
@@ -27,6 +28,7 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 
 	@Override
 	public void drawImage(TextureImage im, int x, int y, int w, int h) {
+		glEnable(GL_TEXTURE_2D);
 		glColor3f(1, 1, 1);
 		glBindTexture(GL_TEXTURE_2D, im.textureId);
 		glBegin(GL_QUADS);
@@ -47,8 +49,9 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 		// TODO ifx it using the bottom instead of top left as 0,0
 		float scaled_tilex0 = 1 - ((float) tilex0 / (float) im.width);
 		float scaled_tilex1 = 1 - ((float) tilex1 / (float) im.width);
-		float scaled_tiley0 = 1 - ((float) tiley0 / (float) im.height);
-		float scaled_tiley1 = 1 - ((float) tiley1 / (float) im.height);
+		float scaled_tiley1 = ((float) tiley0 / (float) im.height);
+		float scaled_tiley0 = ((float) tiley1 / (float) im.height);
+		glEnable(GL_TEXTURE_2D);
 		glColor3f(1, 1, 1);
 		glBindTexture(GL_TEXTURE_2D, im.textureId);
 		glBegin(GL_QUADS);
@@ -65,12 +68,19 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 
 	@Override
 	public void drawRect(Color color, int x0, int y0, int x1, int y1) {
-		// TODO Auto-generated method stub
-		
+		glDisable(GL_TEXTURE_2D);
+		glColor3ub((byte)color.red, (byte)color.green, (byte)color.blue);
+		glBegin(GL_LINE_LOOP);
+		glVertex2f(x0, y0);
+		glVertex2f(x1, y0);
+		glVertex2f(x1, y1);
+		glVertex2f(x0, y1);
+		glEnd();
 	}
 
 	@Override
 	public void fillRect(Color color, int x0, int y0, int x1, int y1) {
+		glDisable(GL_TEXTURE_2D);
 		// TODO figure out if 3b is different than 3ub
 		glColor3ub((byte)color.red, (byte)color.green, (byte)color.blue);
 		glBegin(GL_QUADS);
