@@ -37,4 +37,15 @@ public class Color implements Serializable {
 	public Color(int red, int green, int blue, int alpha) {
 		this((byte)red, (byte)green, (byte)blue, (byte)alpha);
 	}
+	
+	public Color(int argb) {
+		alpha = (argb >> 24) & 0xFF;
+		red = (argb >> 16) & 0xFF;
+		green = (argb >> 8) & 0xFF;
+		blue = (argb >> 0) & 0xFF;
+	}
+	
+	public int toARGB() {
+		return (alpha << 24) + (red << 16) + (green << 8) + blue;
+	}
 }

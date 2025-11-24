@@ -10,5 +10,6 @@ public interface Renderer<ImageType extends Image> {
 	public void drawRect(Color color, int x0, int y0, int x1, int y1);
 	public void fillRect(Color color, int x0, int y0, int x1, int y1);
 	public void endRendering();
-	public void addTexture(ImageType im);
+	// only used for openglrenderer
+	public default void addTexture(ImageType im) {};
 }
