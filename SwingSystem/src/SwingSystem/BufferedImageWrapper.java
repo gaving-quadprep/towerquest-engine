@@ -47,4 +47,8 @@ public class BufferedImageWrapper implements Image {
 		// untested
 		return new BufferedImageWrapper((BufferedImage) image.getScaledInstance(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB));
 	}
+	
+	public BufferedImage getBufferedImage() {
+		return this.image;
+	}
 }

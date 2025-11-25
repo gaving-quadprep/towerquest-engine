@@ -1,6 +1,10 @@
 package SwingSystem;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import net.towerquest.system.KeyboardEventHandler;
 import net.towerquest.system.Renderer;
@@ -8,6 +12,12 @@ import net.towerquest.system.Window;
 
 public class JFrameWindow implements Window<BufferedImageWrapper,Graphics2DRenderer,KeyListenerEventHandler> {
 	JFrame jFrame;
+	JPanel innerPanel;
+	Graphics2DRenderer renderer = new Graphics2DRenderer();
+	
+	JFrameWindow() {
+		this.jFrame = new JFrame();
+	}
 	
 	@Override
 	public void destroy() {
@@ -15,10 +25,8 @@ public class JFrameWindow implements Window<BufferedImageWrapper,Graphics2DRende
 	}
 
 	@Override
-	public Renderer getRenderer() {
-		// get panel
-		//return new Graphics2DRenderer()
-		return null;
+	public Graphics2DRenderer getRenderer() {
+		return renderer;
 	}
 
 	@Override
@@ -38,7 +46,7 @@ public class JFrameWindow implements Window<BufferedImageWrapper,Graphics2DRende
 	}
 
 	@Override
-	public KeyboardEventHandler getKeyboardEventHandler() {
+	public KeyListenerEventHandler getKeyboardEventHandler() {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -52,12 +60,28 @@ public class JFrameWindow implements Window<BufferedImageWrapper,Graphics2DRende
 	public void setTitle(String title) {
 		jFrame.setTitle(title);
 	}
-	public void center() {}
-	public void setPositionOnScreen(int x, int y) {}
-	public void setResizable(boolean resizable) {}
+	public void center() {
+		jFrame.setLocationRelativeTo(null);
+	}
+	public void setPositionOnScreen(int x, int y) {
+		jFrame.setLocation(x, y);
+	}
+	public void setResizable(boolean resizable) {
+		jFrame.setResizable(resizable);
+	}
 	public void setFPSCap(int fpsCap) {}
-	public void setVSync(boolean vSync) {}
+	public void setVSync(boolean vSync) {
+		// ExtendedBufferCapabilities.VSyncType.VSYNC_ON
+	}
 	public void sync() {}
-	public void onWindowClose(Runnable action) {}
+	public void onWindowClose(Runnable action) {
+		jFrame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		jFrame.addWindowListener(new WindowAdapter(){
+			@Override
+			public void windowClosing(WindowEvent e) {
+				action.run();
+			}
+		});
+	}
 
 }
