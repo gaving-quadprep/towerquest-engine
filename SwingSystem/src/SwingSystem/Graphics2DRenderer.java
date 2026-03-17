@@ -7,6 +7,7 @@ import net.towerquest.util.Color;
 
 public class Graphics2DRenderer implements Renderer<BufferedImageWrapper> {
 	Graphics2D g2d;
+	JFrameWindow parent;
 	@Override
 	public void beginRendering() {
 		// do nothing
@@ -43,7 +44,7 @@ public class Graphics2DRenderer implements Renderer<BufferedImageWrapper> {
 	@Override
 	public void endRendering() {
 		// TODO Auto-generated method stub
-		
+		// maybe g2d.dispose();
 	}
 
 }

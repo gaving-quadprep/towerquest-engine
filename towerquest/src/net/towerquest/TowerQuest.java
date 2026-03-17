@@ -175,6 +175,7 @@ public class TowerQuest {
 		renderer.drawImage(playerImage, (int) x,(int) y);
 		renderer.endRendering();
 		window.update();
+		window.sync();
 	}
 	 
 	public static void main(String[] argv) {

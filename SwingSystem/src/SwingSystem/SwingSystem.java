@@ -1,6 +1,10 @@
 package SwingSystem;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.io.InputStream;
+
+import javax.imageio.ImageIO;
 
 import net.towerquest.system.BaseSystem;
 
@@ -26,14 +30,18 @@ public class SwingSystem implements BaseSystem<JFrameWindow,Graphics2DRenderer,B
 
 	@Override
 	public BufferedImageWrapper createImage(int sizeX, int sizeY) {
-		// TODO Auto-generated method stub
-		return null;
+		return new BufferedImageWrapper(new BufferedImage(sizeX, sizeY, BufferedImage.TYPE_INT_ARGB));
 	}
 
 	@Override
 	public BufferedImageWrapper loadPNG(InputStream pngFile) {
-		// TODO Auto-generated method stub
-		return null;
+		try {
+			return new BufferedImageWrapper(ImageIO.read(pngFile));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }
