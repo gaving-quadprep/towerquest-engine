@@ -22,17 +22,14 @@ public class TowerQuest {
 	
 	int maxFPS = 0;
 	
-	/** position of quad */
 	float x = 400, y = 300;
-	/** angle of quad rotation */
-	float rotation = 0;
 	 
-	/** time at last frame */
+	// time at last frame
 	double lastFrame;
 	 
-	/** frames per second */
+	// frames per second
 	int fps;
-	/** last fps time */
+	// last fps time
 	double lastFPS;
 	
 	boolean gameRunning = true;
@@ -49,7 +46,7 @@ public class TowerQuest {
 	
 	private static double getTimeInMilliseconds() {
 		return ((double)System.nanoTime()) / 1000000.0;
-		//return System.currentTimeMillis();
+		// System.currentTimeMillis() is less accurate
 	}
 	
 	public double getDelta() {
@@ -73,12 +70,12 @@ public class TowerQuest {
 		system.init();
 		
 		window = system.createWindow(640, 480, "TowerQuest");
-		Logger.instance.log("Window Created");
+		Logger.instance.log("Window created");
  
 		renderer = window.getRenderer();
-		Logger.instance.log("OpenGL initialized");
-		getDelta(); // call once before loop to initialise lastFrame
-		lastFPS = getTimeInMilliseconds(); // call before loop to initialise fps timer
+		Logger.instance.log("Renderer initialized");
+		getDelta(); // call once before loop to initialize lastFrame
+		lastFPS = getTimeInMilliseconds(); // call before loop to initialize fps timer
 		
 		kbd = window.getKeyboardEventHandler();
  
@@ -91,7 +88,7 @@ public class TowerQuest {
 			double delta = getDelta();
 			 
 			update(delta);
-			renderGL();
+			render();
 		}
 		
 		Logger.instance.log("Stopping");
@@ -101,9 +98,6 @@ public class TowerQuest {
 	}
 	 
 	public void update(double delta) {
-		// rotate quad
-		rotation += (0.5f * delta);
-		
 		kbd.update();
 		
 		if (kbd.isKeyDown(KeyCode.KEY_LEFT)) x -= 0.35f * delta;
@@ -122,23 +116,7 @@ public class TowerQuest {
 		
 		updateFPS(); // update FPS Counter
 	}
-	 
-	/** 
-	 * Calculate how many milliseconds have passed 
-	 * since last frame.
-	 * 
-	 * @return milliseconds passed since last frame 
-	 */
-	 
-	/**
-	 * Get the accurate system time
-	 * 
-	 * @return The system time in milliseconds
-	 */
-	 
-	/**
-	 * Calculate the FPS and set it in the title bar
-	 */
+	
 	public void updateFPS() {
 		if (getTimeInMilliseconds() - lastFPS > 1000) {
 			Logger.instance.log("FPS: " + fps);
@@ -149,29 +127,11 @@ public class TowerQuest {
 		fps++;
 	}
  
-	public void renderGL() {
-		
-		/*GL11.glColor3f((float) Math.abs(Math.sin((double)System.currentTimeMillis()/1000)), 
-				0.5f, 1.0f);
-
-		// draw quad
-		GL11.glPushMatrix();
-		GL11.glTranslatef(x, y, 0);
-		GL11.glRotatef(rotation, 0f, 0f, 1f);
-		GL11.glTranslatef(-x, -y, 0);
-		
-		GL11.glBegin(GL11.GL_QUADS);
-		GL11.glVertex2f(x - 50, y - 50);
-		GL11.glVertex2f(x + 50, y - 50);
-		GL11.glVertex2f(x + 50, y + 50);
-		GL11.glVertex2f(x - 50, y + 50);
-		GL11.glEnd();
-		GL11.glPopMatrix();*/
-		
+	public void render() {
 		renderer.beginRendering();
 		renderer.drawRect(new Color(255, 255, 0), 100, 100, 250, 250);
 		renderer.fillRect(new Color(255, 0, 0), (int) x - 50,(int) y - 50,(int) x + 50,(int) y + 50);
-		renderer.drawTile(playerImage, (int) x - 10,(int) y - 10,(int) x + 10,(int) y + 10, 0, 0, 32, 32);
+		renderer.drawTile(playerImage, (int) x - 16,(int) y - 16,(int) x + 16,(int) y + 16, 0, 0, 16, 16);
 		renderer.drawImage(playerImage, (int) x,(int) y);
 		renderer.endRendering();
 		window.update();
