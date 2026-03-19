@@ -19,6 +19,11 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	}
+	
+	private void shapeStart(Color color) {
+		glDisable(GL_TEXTURE_2D);
+		glColor3ub((byte)color.red, (byte)color.green, (byte)color.blue);
+	}
 
 	@Override
 	public void drawImage(TextureImage im, int x, int y) {
@@ -68,8 +73,7 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 
 	@Override
 	public void drawRect(Color color, int x0, int y0, int x1, int y1) {
-		glDisable(GL_TEXTURE_2D);
-		glColor3ub((byte)color.red, (byte)color.green, (byte)color.blue);
+		shapeStart(color);
 		glBegin(GL_LINE_LOOP);
 		glVertex2f(x0, y0);
 		glVertex2f(x1, y0);
@@ -80,9 +84,7 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 
 	@Override
 	public void fillRect(Color color, int x0, int y0, int x1, int y1) {
-		glDisable(GL_TEXTURE_2D);
-		// TODO figure out if 3b is different than 3ub
-		glColor3ub((byte)color.red, (byte)color.green, (byte)color.blue);
+		shapeStart(color);
 		glBegin(GL_QUADS);
 		glVertex2f(x0, y0);
 		glVertex2f(x1, y0);
@@ -96,6 +98,35 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 		// TODO Auto-generated method stub
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
+	}
+
+	@Override
+	public void drawLine(Color color, int x0, int y0, int x1, int y1) {
+		shapeStart(color);
+		glBegin(GL_LINES);
+		glVertex2f(x0, y0);
+		glVertex2f(x1, y1);
+		glEnd();
+	}
+
+	@Override
+	public void drawTri(Color color, int x0, int y0, int x1, int y1, int x2, int y2) {
+		shapeStart(color);
+		glBegin(GL_LINE_LOOP);
+		glVertex2f(x0, y0);
+		glVertex2f(x1, y1);
+		glVertex2f(x2, y2);
+		glEnd();
+	}
+
+	@Override
+	public void fillTri(Color color, int x0, int y0, int x1, int y1, int x2, int y2) {
+		shapeStart(color);
+		glBegin(GL_TRIANGLES);
+		glVertex2f(x0, y0);
+		glVertex2f(x1, y1);
+		glVertex2f(x2, y2);
+		glEnd();
 	}
 
 	@Override

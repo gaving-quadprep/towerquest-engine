@@ -8,6 +8,11 @@ import net.towerquest.util.Color;
 public class Graphics2DRenderer implements Renderer<BufferedImageWrapper> {
 	Graphics2D g2d;
 	JFrameWindow parent;
+	
+	public static java.awt.Color toNativeColor(Color color) {
+		return new java.awt.Color(color.red, color.green, color.blue, color.alpha);
+	}
+	
 	@Override
 	public void beginRendering() {
 		// do nothing
@@ -31,14 +36,26 @@ public class Graphics2DRenderer implements Renderer<BufferedImageWrapper> {
 
 	@Override
 	public void drawRect(Color color, int x0, int y0, int x1, int y1) {
-		g2d.setColor(new java.awt.Color(color.red, color.green, color.blue, color.alpha));
+		g2d.setColor(toNativeColor(color));
 		g2d.drawRect(x0, y0, x1-x0, y1-y0);
 	}
 
 	@Override
 	public void fillRect(Color color, int x0, int y0, int x1, int y1) {
-		g2d.setColor(new java.awt.Color(color.red, color.green, color.blue, color.alpha));
+		g2d.setColor(toNativeColor(color));
 		g2d.fillRect(x0, y0, x1-x0, y1-y0);
+	}
+
+	@Override
+	public void drawLine(Color color, int x0, int y0, int x1, int y1) {
+		g2d.setColor(toNativeColor(color));
+		g2d.drawLine(x0, y0, x1, y1);
+	}
+
+	@Override
+	public void fillTri(Color color, int x0, int y0, int x1, int y1, int x2, int y2) {
+		g2d.setColor(toNativeColor(color));
+		g2d.fillPolygon(new int[] {x0, x1, x2}, new int[] {y0, y1, y2}, 3);
 	}
 
 	@Override
