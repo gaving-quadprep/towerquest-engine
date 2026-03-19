@@ -6,8 +6,13 @@ import net.towerquest.system.Renderer;
 import net.towerquest.util.Color;
 
 public class Graphics2DRenderer implements Renderer<BufferedImageWrapper> {
+	// TODO figure out bufferstrategy
 	Graphics2D g2d;
 	JFrameWindow parent;
+	
+	Graphics2DRenderer(JFrameWindow parent) {
+		this.parent = parent;
+	}
 	
 	public static java.awt.Color toNativeColor(Color color) {
 		return new java.awt.Color(color.red, color.green, color.blue, color.alpha);

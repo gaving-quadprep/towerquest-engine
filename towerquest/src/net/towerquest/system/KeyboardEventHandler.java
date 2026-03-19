@@ -1,6 +1,6 @@
 package net.towerquest.system;
 
-import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 
 public interface KeyboardEventHandler {
@@ -56,6 +56,6 @@ public interface KeyboardEventHandler {
 	/** used for text input because of keyboard layouts */
 	public void onKeyTyped(Consumer<Character> fn);
 	public boolean isKeyDown(KeyCode key);
-	public List<KeyCode> getChangedKeys();
+	public Set<KeyCode> getChangedKeys();
 	
 }

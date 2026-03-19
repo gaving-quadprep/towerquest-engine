@@ -24,8 +24,10 @@ public class SwingSystem implements BaseSystem<JFrameWindow,Graphics2DRenderer,B
 
 	@Override
 	public JFrameWindow createWindow(int sizeX, int sizeY, String title) {
-		// TODO Auto-generated method stub
-		return null;
+		JFrameWindow window = new JFrameWindow();
+		window.setSize(sizeX, sizeY);
+		window.setTitle(title);
+		return window;
 	}
 
 	@Override

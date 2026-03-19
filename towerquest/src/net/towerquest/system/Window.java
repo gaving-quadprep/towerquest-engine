@@ -6,8 +6,8 @@ public interface Window<ImageType extends Image, RendererType extends Renderer<I
 	public int getWidth();
 	public int getHeight();
 	public void update();
-	
 	// optional
+	public default void setSize(int x, int y) {}
 	public default void setIcon(ImageType icon) {}
 	public default void setTitle(String title) {}
 	/* just puts the window in the center of the screen */

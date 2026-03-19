@@ -5,6 +5,7 @@ import net.towerquest.entity.Entity;
 import net.towerquest.entity.components.CollisionComponent;
 import net.towerquest.entity.components.PositionComponent;
 import net.towerquest.map.Level;
+import net.towerquest.render.WorldRenderer;
 import net.towerquest.system.BaseSystem;
 import net.towerquest.system.Image;
 import net.towerquest.system.KeyboardEventHandler;
@@ -16,6 +17,7 @@ import net.towerquest.util.Logger;
 
 import java.io.FileInputStream;
 
+import SwingSystem.SwingSystem;
 import net.towerquest.LWJGLSystem.LWJGLSystem;
  
 public class TowerQuest {
@@ -39,10 +41,10 @@ public class TowerQuest {
 	
 	// private and not static, not making that mistake again
 	private Level level;
-	
+	private WorldRenderer wr;
 	private Image playerImage;
 	
-	private BaseSystem<?, ?, ?, ?> system = new LWJGLSystem();
+	private BaseSystem<?, ?, ?, ?> system = new SwingSystem();
 	
 	private static double getTimeInMilliseconds() {
 		return ((double)System.nanoTime()) / 1000000.0;
@@ -128,6 +130,8 @@ public class TowerQuest {
 	}
  
 	public void render() {
+		level.render(wr);
+		
 		renderer.beginRendering();
 		renderer.drawRect(new Color(255, 255, 0), 100, 100, 250, 250);
 		renderer.fillRect(new Color(255, 0, 0), (int) x - 50,(int) y - 50,(int) x + 50,(int) y + 50);

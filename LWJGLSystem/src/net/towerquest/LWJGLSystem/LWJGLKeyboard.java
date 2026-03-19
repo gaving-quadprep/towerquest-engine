@@ -1,10 +1,10 @@
 
 package net.towerquest.LWJGLSystem;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 import java.util.function.Consumer;
 
 import org.lwjgl.input.Keyboard;
@@ -12,10 +12,9 @@ import org.lwjgl.input.Keyboard;
 import net.towerquest.system.KeyboardEventHandler;
 
 public class LWJGLKeyboard implements KeyboardEventHandler {
-	private Consumer<KeyCode> onKeyUp = null;
-	private Consumer<KeyCode> onKeyDown = null;
+	private Consumer<KeyCode> onKeyUp = null, onKeyDown = null;
 	private Consumer<Character> onKeyTyped = null;
-	private List<KeyCode> changedKeys = new ArrayList<KeyCode>();
+	private Set<KeyCode> changedKeys = new HashSet<KeyCode>();
 	Map<Integer, KeyCode> keyCodes = new HashMap<Integer, KeyCode>();
 	public LWJGLKeyboard() {
 		
@@ -112,7 +111,7 @@ public class LWJGLKeyboard implements KeyboardEventHandler {
 	}
 
 	@Override
-	public List<KeyCode> getChangedKeys() {
+	public Set<KeyCode> getChangedKeys() {
 		return changedKeys;
 	}
 

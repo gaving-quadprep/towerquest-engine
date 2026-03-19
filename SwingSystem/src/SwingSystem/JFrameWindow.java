@@ -19,10 +19,13 @@ import net.towerquest.system.Window;
 public class JFrameWindow implements Window<BufferedImageWrapper,Graphics2DRenderer,KeyListenerEventHandler> {
 	JFrame jFrame;
 	JPanel innerPanel;
-	Graphics2DRenderer renderer = new Graphics2DRenderer();
+	Graphics2DRenderer renderer = new Graphics2DRenderer(this);
+	KeyListenerEventHandler kbd = new KeyListenerEventHandler();
 	
 	JFrameWindow() {
 		this.jFrame = new JFrame();
+		// west virginia
+		jFrame.addKeyListener(kbd);
 	}
 	
 	@Override
@@ -53,13 +56,16 @@ public class JFrameWindow implements Window<BufferedImageWrapper,Graphics2DRende
 
 	@Override
 	public KeyListenerEventHandler getKeyboardEventHandler() {
-		// TODO Auto-generated method stub
-		return null;
+		return kbd;
 	}
 	
 
 	
 	// optional
+	@Override
+	public void setSize(int x, int y) {
+		jFrame.setSize(x, y);
+	}
 	@Override
 	public void setIcon(BufferedImageWrapper icon) {
 		jFrame.setIconImage(icon.image);
