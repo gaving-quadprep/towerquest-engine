@@ -81,7 +81,7 @@ public class TowerQuest {
  
 		window.onWindowClose(() -> gameRunning = false);
 		
-		playerImage = system.loadPNG(TowerQuest.class.getResourceAsStream("/net/towerquest/assets/player.png"));
+		playerImage = system.loadPNGOrNull(TowerQuest.class.getResourceAsStream("/net/towerquest/assets/player.png"));
 		
 		
 		while (gameRunning) {

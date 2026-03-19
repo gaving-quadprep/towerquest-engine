@@ -9,6 +9,7 @@ import java.awt.image.DataBuffer;
 import java.awt.image.DataBufferByte;
 import java.awt.image.Raster;
 import java.awt.image.WritableRaster;
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.Buffer;
 import java.nio.ByteBuffer;
@@ -41,6 +42,7 @@ public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, Text
             false,
             ComponentColorModel.OPAQUE,
             DataBuffer.TYPE_BYTE);
+	
 	int createTextureID() {
 		GL11.glGenTextures(textureIDBuffer);
 		return textureIDBuffer.get(0);
@@ -120,47 +122,41 @@ public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, Text
     }
 
 	@Override
-	public TextureImage loadPNG(InputStream pngFile) {
+	public TextureImage loadPNG(InputStream pngFile) throws IOException {
 		BufferedImage bufferedImage;
-		try {
-			bufferedImage = ImageIO.read(pngFile);
-			
-			TextureImage texture = new TextureImage(createTextureID());
-			GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.textureId);
-			texture.width = bufferedImage.getWidth();
-			texture.height = bufferedImage.getHeight();
-			int format;
-			if (bufferedImage.getColorModel().hasAlpha()) {
-				format = GL11.GL_RGBA;
-			} else {
-				format = GL11.GL_RGB;
-			}
-			
-			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
-			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
-
-			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
-			GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
-			
-			texture.imageData = convertImageData(bufferedImage);
-			
-			//still unfinished (i copied the one for the lwjgl example because i cant figure out how textures work)
-			GL11.glTexImage2D(GL11.GL_TEXTURE_2D,
-                    0,
-                    format,
-                    get2Fold(bufferedImage.getWidth()),
-                    get2Fold(bufferedImage.getHeight()),
-                    0,
-                    format,
-                    GL11.GL_UNSIGNED_BYTE,
-                    texture.imageData);
-			
-			return texture;
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
+		bufferedImage = ImageIO.read(pngFile);
+		
+		TextureImage texture = new TextureImage(createTextureID());
+		GL11.glBindTexture(GL11.GL_TEXTURE_2D, texture.textureId);
+		texture.width = bufferedImage.getWidth();
+		texture.height = bufferedImage.getHeight();
+		int format;
+		if (bufferedImage.getColorModel().hasAlpha()) {
+			format = GL11.GL_RGBA;
+		} else {
+			format = GL11.GL_RGB;
 		}
+		
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_S, GL11.GL_REPEAT);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_WRAP_T, GL11.GL_REPEAT);
+
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MAG_FILTER, GL11.GL_NEAREST);
+		GL11.glTexParameteri(GL11.GL_TEXTURE_2D, GL11.GL_TEXTURE_MIN_FILTER, GL11.GL_LINEAR);
+		
+		texture.imageData = convertImageData(bufferedImage);
+		
+		//still unfinished (i copied the one for the lwjgl example because i cant figure out how textures work)
+		GL11.glTexImage2D(GL11.GL_TEXTURE_2D,
+                0,
+                format,
+                get2Fold(bufferedImage.getWidth()),
+                get2Fold(bufferedImage.getHeight()),
+                0,
+                format,
+                GL11.GL_UNSIGNED_BYTE,
+                texture.imageData);
+		
+		return texture;
 	}
 	
 	// i stole this from the lwjgl example

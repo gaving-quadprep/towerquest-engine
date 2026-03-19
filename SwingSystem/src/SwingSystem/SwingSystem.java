@@ -34,14 +34,8 @@ public class SwingSystem implements BaseSystem<JFrameWindow,Graphics2DRenderer,B
 	}
 
 	@Override
-	public BufferedImageWrapper loadPNG(InputStream pngFile) {
-		try {
-			return new BufferedImageWrapper(ImageIO.read(pngFile));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
+	public BufferedImageWrapper loadPNG(InputStream pngFile) throws IOException {
+		return new BufferedImageWrapper(ImageIO.read(pngFile));
 	}
 
 }

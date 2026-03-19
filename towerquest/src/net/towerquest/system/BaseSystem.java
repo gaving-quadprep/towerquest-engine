@@ -1,5 +1,6 @@
 package net.towerquest.system;
 
+import java.io.IOException;
 import java.io.InputStream;
 
 /** this provides an abstract library for doing stuff like window creation, the generics are so that things like images don't have to be cast constantly
@@ -15,10 +16,18 @@ public interface BaseSystem<WindowType extends Window<ImageType, RendererType, K
 	public WindowType createWindow(int sizeX, int sizeY, String title);
 	/** Creates a blank image */
 	public ImageType createImage(int sizeX, int sizeY);
-	public ImageType loadPNG(InputStream pngFile);
+	public ImageType loadPNG(InputStream pngFile) throws IOException;
 	
 	/** Creates and initializes a sound system. Returns null if sound is not available. */
 	public default SoundSystem<?> getSoundSystem() {
 		return null;
+	}
+	
+	public default ImageType loadPNGOrNull(InputStream pngFile) {
+		try {
+			return loadPNG(pngFile);
+		} catch (IOException e) {
+			return null;
+		}
 	}
 }
