@@ -107,12 +107,6 @@ public class TowerQuest {
 		 
 		if (kbd.isKeyDown(KeyCode.KEY_UP)) y += 0.35f * delta;
 		if (kbd.isKeyDown(KeyCode.KEY_DOWN)) y -= 0.35f * delta;
-		 
-		// keep quad on the screen
-		if (x < 0) x = 0;
-		if (x > 640) x = 640;
-		if (y < 0) y = 0;
-		if (y > 480) y = 480;
 		
 		level.update(delta);
 		
@@ -133,6 +127,7 @@ public class TowerQuest {
 		level.render(wr);
 		
 		renderer.beginRendering();
+		renderer.fillRect(new Color(0, 0, 0), 0, 0, 640, 480);
 		renderer.drawRect(new Color(255, 255, 0), 100, 100, 250, 250);
 		renderer.fillRect(new Color(255, 0, 0), (int) x - 50,(int) y - 50,(int) x + 50,(int) y + 50);
 		renderer.drawTile(playerImage, (int) x - 16,(int) y - 16,(int) x + 16,(int) y + 16, 0, 0, 16, 16);

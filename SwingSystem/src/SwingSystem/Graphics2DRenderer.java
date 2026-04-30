@@ -1,12 +1,13 @@
 package SwingSystem;
 
 import java.awt.Graphics2D;
+import java.awt.image.BufferStrategy;
 
 import net.towerquest.system.Renderer;
 import net.towerquest.util.Color;
 
 public class Graphics2DRenderer implements Renderer<BufferedImageWrapper> {
-	// TODO figure out bufferstrategy
+	BufferStrategy bs;
 	Graphics2D g2d;
 	JFrameWindow parent;
 	
@@ -20,7 +21,8 @@ public class Graphics2DRenderer implements Renderer<BufferedImageWrapper> {
 	
 	@Override
 	public void beginRendering() {
-		// do nothing
+		bs = parent.canvas.getBufferStrategy();
+		g2d = (Graphics2D) bs.getDrawGraphics();
 	}
 
 	@Override
@@ -65,8 +67,9 @@ public class Graphics2DRenderer implements Renderer<BufferedImageWrapper> {
 
 	@Override
 	public void endRendering() {
-		// TODO Auto-generated method stub
-		// maybe g2d.dispose();
+		// TODO contentsLost/contentsRestored
+		g2d.dispose();
+		bs.show();
 	}
 
 }

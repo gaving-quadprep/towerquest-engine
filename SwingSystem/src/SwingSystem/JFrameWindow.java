@@ -33,6 +33,9 @@ public class JFrameWindow implements Window<BufferedImageWrapper,Graphics2DRende
 		// west virginia
 		jFrame.addKeyListener(kbd);
 		canvas = new Canvas();
+		jFrame.add(canvas);
+		jFrame.pack();
+		jFrame.setVisible(true);
 		canvas.createBufferStrategy(numBuffers);
 	}
 	

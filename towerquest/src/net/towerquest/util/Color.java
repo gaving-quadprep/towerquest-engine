@@ -17,8 +17,8 @@ public class Color implements Serializable {
 	public int red;
 	public int green;
 	public int blue;
-	// i can never remember if 0 or 255 alpha is transparent
-	public int alpha;
+	//
+	public int alpha = 255; // opaque by default
 	
 	public Color() {}
 	public Color(byte red, byte green, byte blue) {
