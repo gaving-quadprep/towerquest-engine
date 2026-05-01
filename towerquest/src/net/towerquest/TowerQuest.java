@@ -44,7 +44,7 @@ public class TowerQuest {
 	private WorldRenderer wr;
 	private Image playerImage;
 	
-	private BaseSystem<?, ?, ?, ?> system = new SwingSystem();
+	private BaseSystem<?, ?, ?, ?> system = new LWJGLSystem();
 	
 	private static double getTimeInMilliseconds() {
 		return ((double)System.nanoTime()) / 1000000.0;
@@ -105,8 +105,8 @@ public class TowerQuest {
 		if (kbd.isKeyDown(KeyCode.KEY_LEFT)) x -= 0.35f * delta;
 		if (kbd.isKeyDown(KeyCode.KEY_RIGHT)) x += 0.35f * delta;
 		 
-		if (kbd.isKeyDown(KeyCode.KEY_UP)) y += 0.35f * delta;
-		if (kbd.isKeyDown(KeyCode.KEY_DOWN)) y -= 0.35f * delta;
+		if (kbd.isKeyDown(KeyCode.KEY_UP)) y -= 0.35f * delta;
+		if (kbd.isKeyDown(KeyCode.KEY_DOWN)) y += 0.35f * delta;
 		
 		level.update(delta);
 		
@@ -128,6 +128,7 @@ public class TowerQuest {
 		
 		renderer.beginRendering();
 		renderer.fillRect(new Color(0, 0, 0), 0, 0, 640, 480);
+		renderer.fillTri(new Color(0, 255, 0), 0, 0, 100, 0, 100, 100);
 		renderer.drawRect(new Color(255, 255, 0), 100, 100, 250, 250);
 		renderer.fillRect(new Color(255, 0, 0), (int) x - 50,(int) y - 50,(int) x + 50,(int) y + 50);
 		renderer.drawTile(playerImage, (int) x - 16,(int) y - 16,(int) x + 16,(int) y + 16, 0, 0, 16, 16);

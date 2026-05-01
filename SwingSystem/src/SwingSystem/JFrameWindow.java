@@ -30,9 +30,8 @@ public class JFrameWindow implements Window<BufferedImageWrapper,Graphics2DRende
 	
 	JFrameWindow() {
 		this.jFrame = new JFrame();
-		// west virginia
-		jFrame.addKeyListener(kbd);
 		canvas = new Canvas();
+		canvas.addKeyListener(kbd);
 		jFrame.add(canvas);
 		jFrame.pack();
 		jFrame.setVisible(true);

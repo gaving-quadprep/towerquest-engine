@@ -10,6 +10,8 @@ import net.towerquest.util.Color;
 
 public class OpenGLRenderer implements Renderer<TextureImage> {
 	LWJGLWindow parent;
+	// to avoid repeatedly calling
+	private int height;
 	OpenGLRenderer(LWJGLWindow parent) {
 		this.parent = parent;
 		glMatrixMode(GL_PROJECTION);
@@ -37,14 +39,14 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 		glColor3f(1, 1, 1);
 		glBindTexture(GL_TEXTURE_2D, im.textureId);
 		glBegin(GL_QUADS);
-		glTexCoord2f(0.0f, 1.0f);
-		glVertex2f(x, y);
-		glTexCoord2f(1.0f, 1.0f);
-		glVertex2f(x+w, y);
-		glTexCoord2f(1.0f, 0.0f);
-		glVertex2f(x+w, y+h);
 		glTexCoord2f(0.0f, 0.0f);
-		glVertex2f(x, y+h);
+		glVertex2f(x, height-y);
+		glTexCoord2f(1.0f, 0.0f);
+		glVertex2f(x+w, height-y);
+		glTexCoord2f(1.0f, 1.0f);
+		glVertex2f(x+w, height-(y+h));
+		glTexCoord2f(0.0f, 1.0f);
+		glVertex2f(x, height-(y+h));
 		glEnd();
 	}
 
@@ -60,14 +62,14 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 		glColor3f(1, 1, 1);
 		glBindTexture(GL_TEXTURE_2D, im.textureId);
 		glBegin(GL_QUADS);
-		glTexCoord2f(scaled_tilex0, scaled_tiley0);
-		glVertex2f(x0, y0);
-		glTexCoord2f(scaled_tilex1, scaled_tiley0);
-		glVertex2f(x1, y0);
-		glTexCoord2f(scaled_tilex1, scaled_tiley1);
-		glVertex2f(x1, y1);
 		glTexCoord2f(scaled_tilex0, scaled_tiley1);
-		glVertex2f(x0, y1);
+		glVertex2f(x0, height-y0);
+		glTexCoord2f(scaled_tilex1, scaled_tiley1);
+		glVertex2f(x1, height-y0);
+		glTexCoord2f(scaled_tilex1, scaled_tiley0);
+		glVertex2f(x1, height-y1);
+		glTexCoord2f(scaled_tilex0, scaled_tiley0);
+		glVertex2f(x0, height-y1);
 		glEnd();
 	}
 
@@ -75,10 +77,10 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 	public void drawRect(Color color, int x0, int y0, int x1, int y1) {
 		shapeStart(color);
 		glBegin(GL_LINE_LOOP);
-		glVertex2f(x0, y0);
-		glVertex2f(x1, y0);
-		glVertex2f(x1, y1);
-		glVertex2f(x0, y1);
+		glVertex2f(x0, height-y0);
+		glVertex2f(x1, height-y0);
+		glVertex2f(x1, height-y1);
+		glVertex2f(x0, height-y1);
 		glEnd();
 	}
 
@@ -86,10 +88,10 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 	public void fillRect(Color color, int x0, int y0, int x1, int y1) {
 		shapeStart(color);
 		glBegin(GL_QUADS);
-		glVertex2f(x0, y0);
-		glVertex2f(x1, y0);
-		glVertex2f(x1, y1);
-		glVertex2f(x0, y1);
+		glVertex2f(x0, height-y0);
+		glVertex2f(x1, height-y0);
+		glVertex2f(x1, height-y1);
+		glVertex2f(x0, height-y1);
 		glEnd();
 	}
 
@@ -98,14 +100,15 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 		// TODO Auto-generated method stub
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
+		height = parent.getHeight();
 	}
 
 	@Override
 	public void drawLine(Color color, int x0, int y0, int x1, int y1) {
 		shapeStart(color);
 		glBegin(GL_LINES);
-		glVertex2f(x0, y0);
-		glVertex2f(x1, y1);
+		glVertex2f(x0, height-y0);
+		glVertex2f(x1, height-y1);
 		glEnd();
 	}
 
@@ -113,9 +116,9 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 	public void drawTri(Color color, int x0, int y0, int x1, int y1, int x2, int y2) {
 		shapeStart(color);
 		glBegin(GL_LINE_LOOP);
-		glVertex2f(x0, y0);
-		glVertex2f(x1, y1);
-		glVertex2f(x2, y2);
+		glVertex2f(x0, height-y0);
+		glVertex2f(x1, height-y1);
+		glVertex2f(x2, height-y2);
 		glEnd();
 	}
 
@@ -123,9 +126,9 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 	public void fillTri(Color color, int x0, int y0, int x1, int y1, int x2, int y2) {
 		shapeStart(color);
 		glBegin(GL_TRIANGLES);
-		glVertex2f(x0, y0);
-		glVertex2f(x1, y1);
-		glVertex2f(x2, y2);
+		glVertex2f(x0, height-y0);
+		glVertex2f(x1, height-y1);
+		glVertex2f(x2, height-y2);
 		glEnd();
 	}
 

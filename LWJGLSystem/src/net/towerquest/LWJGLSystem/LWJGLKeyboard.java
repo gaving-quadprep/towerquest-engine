@@ -9,13 +9,15 @@ import java.util.function.Consumer;
 
 import org.lwjgl.input.Keyboard;
 
+import net.towerquest.system.BiMap;
 import net.towerquest.system.KeyboardEventHandler;
 
 public class LWJGLKeyboard implements KeyboardEventHandler {
 	private Consumer<KeyCode> onKeyUp = null, onKeyDown = null;
 	private Consumer<Character> onKeyTyped = null;
 	private Set<KeyCode> changedKeys = new HashSet<KeyCode>();
-	Map<Integer, KeyCode> keyCodes = new HashMap<Integer, KeyCode>();
+	BiMap<Integer, KeyCode> keyCodes = new BiMap<Integer, KeyCode>();
+	
 	public LWJGLKeyboard() {
 		
 		keyCodes.put(Keyboard.KEY_0, KeyCode.KEY_0);
@@ -102,11 +104,8 @@ public class LWJGLKeyboard implements KeyboardEventHandler {
 
 	@Override
 	public boolean isKeyDown(KeyCode key) {
-		for (Map.Entry<Integer, KeyCode> entry : keyCodes.entrySet()) {
-			if(entry.getValue() == key)
-				if (Keyboard.isKeyDown(entry.getKey()))
-					return true;
-		}
+		if (Keyboard.isKeyDown(keyCodes.getReverse(key)))
+			return true;
 		return false;
 	}
 

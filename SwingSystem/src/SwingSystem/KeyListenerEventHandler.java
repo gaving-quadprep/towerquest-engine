@@ -1,45 +1,62 @@
 package SwingSystem;
 
 import java.awt.event.KeyEvent;
+import static java.awt.event.KeyEvent.*;
 import java.awt.event.KeyListener;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
+import net.towerquest.system.BiMap;
 import net.towerquest.system.KeyboardEventHandler;
+import net.towerquest.system.KeyboardEventHandler.KeyCode;
 
 public class KeyListenerEventHandler implements KeyboardEventHandler, KeyListener {
 	private Consumer<KeyCode> onKeyPressed = null, onKeyReleased = null;
 	private Consumer<Character> onKeyTyped = null;
 	private Set<KeyCode> heldKeys = new HashSet<KeyCode>(),
 			changedKeys = new HashSet<KeyCode>();
+	BiMap<Integer, KeyCode> keyCodes = new BiMap<Integer, KeyCode>();
 	
-	public KeyCode translate(KeyEvent event) {
-		// TODO implement
-		return null;
+	KeyListenerEventHandler() {
+		keyCodes.put(VK_A, KeyCode.KEY_A);
+		keyCodes.put(VK_B, KeyCode.KEY_B);
+		keyCodes.put(VK_C, KeyCode.KEY_C);
+		keyCodes.put(VK_D, KeyCode.KEY_D);
+		keyCodes.put(VK_E, KeyCode.KEY_E);
+		
+		// TODO finish
+
+		keyCodes.put(VK_UP, KeyCode.KEY_UP);
+		keyCodes.put(VK_DOWN, KeyCode.KEY_DOWN);
+		keyCodes.put(VK_LEFT, KeyCode.KEY_LEFT);
+		keyCodes.put(VK_RIGHT, KeyCode.KEY_RIGHT);
 	}
 	
 	// KeyListener methods
 	
 	@Override
 	public void keyPressed(KeyEvent arg0) {
-		KeyCode translated = translate(arg0);
+		KeyCode translated = keyCodes.get(arg0.getKeyCode());
 		heldKeys.add(translated);
 		changedKeys.add(translated);
-		onKeyPressed.accept(translated);
+		if(onKeyPressed != null)
+			onKeyPressed.accept(translated);
 	}
 
 	@Override
 	public void keyReleased(KeyEvent arg0) {
-		KeyCode translated = translate(arg0);
+		KeyCode translated = keyCodes.get(arg0.getKeyCode());
 		heldKeys.remove(translated);
 		changedKeys.add(translated);
-		onKeyReleased.accept(translated);
+		if(onKeyReleased != null)
+			onKeyReleased.accept(translated);
 	}
 
 	@Override
 	public void keyTyped(KeyEvent arg0) {
-		onKeyTyped.accept(arg0.getKeyChar());
+		if(onKeyTyped != null)
+			onKeyTyped.accept(arg0.getKeyChar());
 	}
 	
 	// KeyEventHandler methods
