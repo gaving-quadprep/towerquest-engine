@@ -1,4 +1,4 @@
-package SwingSystem;
+package net.towerquest.SwingSystem;
 
 import java.awt.AWTException;
 import java.awt.BufferCapabilities;

@@ -1,4 +1,4 @@
-package SwingSystem;
+package net.towerquest.SwingSystem;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;

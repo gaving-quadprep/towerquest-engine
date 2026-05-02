@@ -17,8 +17,8 @@ import net.towerquest.util.Logger;
 
 import java.io.FileInputStream;
 
-import SwingSystem.SwingSystem;
 import net.towerquest.LWJGLSystem.LWJGLSystem;
+import net.towerquest.SwingSystem.SwingSystem;
  
 public class TowerQuest {
 	

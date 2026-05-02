@@ -1,4 +1,4 @@
-package SwingSystem;
+package net.towerquest.SwingSystem;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;

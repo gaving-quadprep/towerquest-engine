@@ -1,4 +1,4 @@
-package SwingSystem;
+package net.towerquest.SwingSystem;
 
 import java.awt.event.KeyEvent;
 import static java.awt.event.KeyEvent.*;
