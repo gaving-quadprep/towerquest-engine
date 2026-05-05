@@ -9,14 +9,15 @@ import java.util.function.Consumer;
 
 import org.lwjgl.input.Keyboard;
 
-import net.towerquest.system.BiMap;
 import net.towerquest.system.KeyboardEventHandler;
+import net.towerquest.util.BiHashMap;
+import net.towerquest.util.BiMap;
 
 public class LWJGLKeyboard implements KeyboardEventHandler {
 	private Consumer<KeyCode> onKeyUp = null, onKeyDown = null;
 	private Consumer<Character> onKeyTyped = null;
 	private Set<KeyCode> changedKeys = new HashSet<KeyCode>();
-	BiMap<Integer, KeyCode> keyCodes = new BiMap<Integer, KeyCode>();
+	BiMap<Integer, KeyCode> keyCodes = new BiHashMap<Integer, KeyCode>();
 	
 	public LWJGLKeyboard() {
 		
@@ -64,6 +65,11 @@ public class LWJGLKeyboard implements KeyboardEventHandler {
 		keyCodes.put(Keyboard.KEY_RIGHT, KeyCode.KEY_RIGHT);
 		keyCodes.put(Keyboard.KEY_UP, KeyCode.KEY_UP);
 		keyCodes.put(Keyboard.KEY_DOWN, KeyCode.KEY_DOWN);
+		
+		keyCodes.put(Keyboard.KEY_LSHIFT, KeyCode.KEY_LSHIFT);
+		keyCodes.put(Keyboard.KEY_RSHIFT, KeyCode.KEY_RSHIFT);
+		keyCodes.put(Keyboard.KEY_LMENU, KeyCode.KEY_ALT);
+		keyCodes.put(Keyboard.KEY_RMENU, KeyCode.KEY_ALT);
 		
 	}
 	

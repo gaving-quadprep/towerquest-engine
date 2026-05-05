@@ -30,18 +30,18 @@ public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, Text
 	static LWJGLSystem instance;
 	private IntBuffer textureIDBuffer = BufferUtils.createIntBuffer(1);
 	private static final ColorModel glAlphaColorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB),
-            new int[] {8,8,8,8},
-            true,
-            false,
-            ComponentColorModel.TRANSLUCENT,
-            DataBuffer.TYPE_BYTE);
+			new int[] {8,8,8,8},
+			true,
+			false,
+			ComponentColorModel.TRANSLUCENT,
+			DataBuffer.TYPE_BYTE);
 
 	private static final ColorModel glColorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB),
-            new int[] {8,8,8,0},
-            false,
-            false,
-            ComponentColorModel.OPAQUE,
-            DataBuffer.TYPE_BYTE);
+			new int[] {8,8,8,0},
+			false,
+			false,
+			ComponentColorModel.OPAQUE,
+			DataBuffer.TYPE_BYTE);
 	
 	int createTextureID() {
 		GL11.glGenTextures(textureIDBuffer);
@@ -77,49 +77,45 @@ public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, Text
 		return null;
 	}
 	public ByteBuffer convertImageData(BufferedImage bufferedImage) {
-        ByteBuffer imageBuffer;
-        WritableRaster raster;
-        BufferedImage texImage;
+		ByteBuffer imageBuffer;
+		WritableRaster raster;
+		BufferedImage texImage;
  
-        int texWidth = 2;
-        int texHeight = 2;
+		int texWidth = 2;
+		int texHeight = 2;
  
-        // find the closest power of 2 for the width and height
-        // of the produced texture
-        while (texWidth < bufferedImage.getWidth()) {
-            texWidth *= 2;
-        }
-        while (texHeight < bufferedImage.getHeight()) {
-            texHeight *= 2;
-        }
+		// find the closest power of 2 for the width and height
+		// of the produced texture
+		while (texWidth < bufferedImage.getWidth()) {
+			texWidth *= 2;
+		}
+		while (texHeight < bufferedImage.getHeight()) {
+			texHeight *= 2;
+		}
+		
+		boolean alpha = bufferedImage.getColorModel().hasAlpha();
+		raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE, texWidth,
+				texHeight, alpha ? 4 : 3, null);
+		texImage = new BufferedImage(alpha ? glAlphaColorModel : glColorModel,
+					raster, false, null);
+		// copy the source image into the produced image
+		Graphics g = texImage.getGraphics();
+		g.setColor(new java.awt.Color(0f,0f,0f,0f));
+		g.fillRect(0,0,texWidth,texHeight);
+		g.drawImage(bufferedImage,0,0,null);
+		g.dispose();
  
-        // create a raster that can be used by OpenGL as a source
-        // for a texture
-        if (bufferedImage.getColorModel().hasAlpha()) {
-            raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE,texWidth,texHeight,4,null);
-            texImage = new BufferedImage(glAlphaColorModel,raster,false,new Hashtable());
-        } else {
-            raster = Raster.createInterleavedRaster(DataBuffer.TYPE_BYTE,texWidth,texHeight,3,null);
-            texImage = new BufferedImage(glColorModel,raster,false,new Hashtable());
-        }
+		// build a byte buffer from the temporary image
+		// that be used by OpenGL to produce a texture.
+		byte[] data = ((DataBufferByte) texImage.getRaster().getDataBuffer()).getData();
  
-        // copy the source image into the produced image
-        Graphics g = texImage.getGraphics();
-        g.setColor(new java.awt.Color(0f,0f,0f,0f));
-        g.fillRect(0,0,texWidth,texHeight);
-        g.drawImage(bufferedImage,0,0,null);
+		imageBuffer = ByteBuffer.allocateDirect(data.length);
+		imageBuffer.order(ByteOrder.nativeOrder());
+		imageBuffer.put(data, 0, data.length);
+		imageBuffer.flip();
  
-        // build a byte buffer from the temporary image
-        // that be used by OpenGL to produce a texture.
-        byte[] data = ((DataBufferByte) texImage.getRaster().getDataBuffer()).getData();
- 
-        imageBuffer = ByteBuffer.allocateDirect(data.length);
-        imageBuffer.order(ByteOrder.nativeOrder());
-        imageBuffer.put(data, 0, data.length);
-        ((Buffer)imageBuffer).flip();
- 
-        return imageBuffer;
-    }
+		return imageBuffer;
+	}
 
 	@Override
 	public TextureImage loadPNG(InputStream pngFile) throws IOException {
@@ -147,26 +143,26 @@ public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, Text
 		
 		//still unfinished (i copied the one for the lwjgl example because i cant figure out how textures work)
 		GL11.glTexImage2D(GL11.GL_TEXTURE_2D,
-                0,
-                format,
-                get2Fold(bufferedImage.getWidth()),
-                get2Fold(bufferedImage.getHeight()),
-                0,
-                format,
-                GL11.GL_UNSIGNED_BYTE,
-                texture.imageData);
+				0,
+				format,
+				get2Fold(bufferedImage.getWidth()),
+				get2Fold(bufferedImage.getHeight()),
+				0,
+				format,
+				GL11.GL_UNSIGNED_BYTE,
+				texture.imageData);
 		
 		return texture;
 	}
 	
 	// i stole this from the lwjgl example
 	private static int get2Fold(int fold) {
-        int ret = 2;
-        while (ret < fold) {
-            ret *= 2;
-        }
-        return ret;
-    }
+		int ret = 2;
+		while (ret < fold) {
+			ret *= 2;
+		}
+		return ret;
+	}
 
 	@Override
 	public SoundSystem<?> getSoundSystem() {

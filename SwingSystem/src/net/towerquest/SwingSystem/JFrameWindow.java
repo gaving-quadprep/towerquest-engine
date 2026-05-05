@@ -97,15 +97,17 @@ public class JFrameWindow implements Window<BufferedImageWrapper,Graphics2DRende
 	}
 	@Override
 	public void setFPSCap(int fpsCap) {}
+	
 	@Override
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	public void setVSync(boolean vSync) {
-        BufferStrategy bs = canvas.getBufferStrategy();
-        BufferCapabilities bc = bs.getCapabilities();
-        // TODO use BufferStrategy before using this code, also finish writing it
-        
-        try {
-        	// this code is ugly because i need to access it without importing it
-        	
+		BufferStrategy bs = canvas.getBufferStrategy();
+		BufferCapabilities bc = bs.getCapabilities();
+		// TODO use BufferStrategy before using this code, also finish writing it
+		
+		try {
+			// this code is ugly because i need to access it without importing it
+			
 			Class<? extends BufferCapabilities> egc = (Class<? extends BufferCapabilities>)
 					Class.forName("sun.java2d.pipe.hw.ExtendedBufferCapabilities");
 			Class<? extends Enum> vst = (Class<? extends Enum>) Class.forName("sun.java2d.pipe.hw.ExtendedBufferCapabilities$VSyncType");

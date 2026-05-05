@@ -7,16 +7,17 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import net.towerquest.system.BiMap;
 import net.towerquest.system.KeyboardEventHandler;
 import net.towerquest.system.KeyboardEventHandler.KeyCode;
+import net.towerquest.util.BiHashMap;
+import net.towerquest.util.BiMap;
 
 public class KeyListenerEventHandler implements KeyboardEventHandler, KeyListener {
 	private Consumer<KeyCode> onKeyPressed = null, onKeyReleased = null;
 	private Consumer<Character> onKeyTyped = null;
 	private Set<KeyCode> heldKeys = new HashSet<KeyCode>(),
 			changedKeys = new HashSet<KeyCode>();
-	BiMap<Integer, KeyCode> keyCodes = new BiMap<Integer, KeyCode>();
+	BiMap<Integer, KeyCode> keyCodes = new BiHashMap<Integer, KeyCode>();
 	
 	KeyListenerEventHandler() {
 		keyCodes.put(VK_A, KeyCode.KEY_A);

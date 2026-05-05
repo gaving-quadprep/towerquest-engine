@@ -6,6 +6,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Registry<T> {
+	// this does not use a BiMap in case it needs duplicate entries
 	private final Map<String, T> map;
 	private final Map<T, String> mapReverse;
 	
