@@ -11,8 +11,8 @@ public class UniqueBiHashMap<K,V> implements UniqueBiMap<K,V> {
 		this(false);
 	}
 	public UniqueBiHashMap(boolean ordered) {
-		map = ordered ? new LinkedHashMap<K, V>() :new HashMap<K, V>();
-		mapReverse = ordered ? new LinkedHashMap<V, K>() :new HashMap<V, K>();
+		map = ordered ? new LinkedHashMap<>() : new HashMap<>();
+		mapReverse = ordered ? new LinkedHashMap<>() : new HashMap<>();
 	}
 
 	@Override
@@ -29,5 +29,24 @@ public class UniqueBiHashMap<K,V> implements UniqueBiMap<K,V> {
 		map.put(k, v);
 		mapReverse.put(v, k);
 	}
-	// TODO finish
+	@Override
+	public V get(K k) {
+		return map.get(k);
+	}
+	@Override
+	public K getReverse(V v) {
+		return mapReverse.get(v);
+	}
+	@Override
+	public V remove(K k) {
+		V v = map.remove(k);
+		mapReverse.remove(v);
+		return v;
+	}
+	@Override
+	public K removeReverse(V v) {
+		K k = mapReverse.remove(v);
+		map.remove(k);
+		return k;
+	}
 }

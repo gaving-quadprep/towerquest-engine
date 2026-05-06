@@ -6,18 +6,10 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class Registry<T> {
-	// this does not use a BiMap in case it needs duplicate entries
-	private final Map<String, T> map;
-	private final Map<T, String> mapReverse;
+	private final BiMap<String, T> map;
 	
 	public Registry(boolean ordered) {
-		if (ordered) {
-			map = new LinkedHashMap<String, T>();
-			mapReverse  = new LinkedHashMap<T, String>();
-		} else {
-			map = new HashMap<String, T>();
-			mapReverse  = new HashMap<T, String>();
-		}
+		map = new BiHashMap<>(ordered);
 	}
 	
 	public Registry() {
@@ -26,14 +18,15 @@ public class Registry<T> {
 	
 	public void addMapping(T t, String name) {
 		map.put(name, t);
-		mapReverse.put(t, name);
 	}
 	public T get(String name) {
 		return map.get(name);
 	}
 	public String getName(T t) {
-		return mapReverse.get(t);
+		return map.getFirstReverse(t);
 	}
+	// TODO implement
+	/*
 	public Collection<String> getNames() {
 		return map.keySet();
 	}
@@ -43,4 +36,5 @@ public class Registry<T> {
 	public Collection<Map.Entry<String, T>> getPairs() {
 		return map.entrySet();
 	}
+	*/
 }

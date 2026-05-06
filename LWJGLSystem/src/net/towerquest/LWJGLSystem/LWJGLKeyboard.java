@@ -1,9 +1,7 @@
 
 package net.towerquest.LWJGLSystem;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import java.util.function.Consumer;
 
@@ -110,8 +108,9 @@ public class LWJGLKeyboard implements KeyboardEventHandler {
 
 	@Override
 	public boolean isKeyDown(KeyCode key) {
-		if (Keyboard.isKeyDown(keyCodes.getReverse(key)))
-			return true;
+		for(int tk : keyCodes.getAllReverse(key))
+			if (Keyboard.isKeyDown(tk))
+				return true;
 		return false;
 	}
 
