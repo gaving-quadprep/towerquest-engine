@@ -1,10 +1,5 @@
 package net.towerquest.util;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
-
 public class Registry<T> {
 	private final BiMap<String, T> map;
 	
