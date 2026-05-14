@@ -1,7 +1,7 @@
 package net.towerquest.entity.components;
 
 import net.towerquest.entity.Component;
-import net.towerquest.event.RenderEvent;
+import net.towerquest.map.Level;
 import net.towerquest.render.WorldRenderable;
 import net.towerquest.render.WorldRenderer;
 import net.towerquest.system.Image;
@@ -11,7 +11,6 @@ public class RenderComponent extends Component implements WorldRenderable {
 	
 	public RenderComponent() {
 		super();
-		this.bindEvent(new RenderEvent(this::render, (wr) -> true));
 	}
 
 	@Override
@@ -19,4 +18,13 @@ public class RenderComponent extends Component implements WorldRenderable {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	@Override
+	public void addToLevel(Level level) {
+		// this is necessary because java treats void and Void as different :blunder:
+		level.renderEvent.bind((wr) -> {render(wr); return null;});
+	}
+	
+	@Override
+	public void removeFromLevel(Level level) {}
 }

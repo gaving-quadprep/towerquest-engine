@@ -5,35 +5,28 @@ import java.util.List;
 
 import net.towerquest.entity.components.DependsOn;
 import net.towerquest.entity.components.MissingDependenciesException;
-import net.towerquest.event.Event;
-import net.towerquest.event.RenderEvent;
+import net.towerquest.entity.components.RenderComponent;
 import net.towerquest.map.Level;
 import net.towerquest.render.WorldRenderable;
 import net.towerquest.render.WorldRenderer;
+import net.towerquest.serialization.Pointer;
 import net.towerquest.serialization.Serializable;
 import net.towerquest.util.Logger;
 
 public class Entity implements Serializable, WorldRenderable {
 	private List<Component> components = new ArrayList<Component>();
-
-	private transient Level level;
+	
+	@Pointer
+	protected Level level;
 	
 	@Override
 	public void render(WorldRenderer wr) {
 		for (Component c : components) {
-			for (Event e : c.getEvents()) {
-				if(e instanceof RenderEvent)
-					((RenderEvent)e).fire(wr);
-			}
+			if (c instanceof RenderComponent)
+				((RenderComponent)c).render(wr);
 		}
 	}
 	
-	// TODO make it use delta
-	public void update(double delta) {
-		for (Component c : components) {
-			c.update(delta);
-		}
-	}
 	
 	public void setLevel(Level level) {
 		this.level = level;
@@ -41,6 +34,21 @@ public class Entity implements Serializable, WorldRenderable {
 	
 	public Level getLevel() {
 		return this.level;
+	}
+	
+	/** Called when the component is added to a level.
+	 *  Doesn't add it to the level, instead use Level's addEntity.
+	 */
+	public void addToLevel(Level level) {
+		setLevel(level);
+		for (Component c : components)
+			c.addToLevel(level);
+	}
+	
+	/** Likewise, called when the component is removed from the level. */
+	public void removeFromLevel(Level level) {
+		for (Component c : components)
+			c.removeFromLevel(level);
 	}
 	
 	public void addComponent(Component c) {
@@ -65,17 +73,18 @@ public class Entity implements Serializable, WorldRenderable {
 		c.setParent(this);
 	}
 
+	@SuppressWarnings("unchecked")
 	public <T extends Component> T getComponent(Class<T> clazz) {
 		for (Component c : components) {
 			if (clazz.isInstance(c))
 				return (T)c;
-			
 		}
 		return null;
 	}
+	
+	@SuppressWarnings("unchecked")
 	public <T extends Component> List<T> getComponents(Class<T> clazz) {
 		List<T> ret = new ArrayList<T>();
-		
 		for (Component c : components) {
 			if (clazz.isInstance(c))
 				ret.add((T) c);

@@ -4,29 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import net.towerquest.entity.Entity;
+import net.towerquest.event.BindableEvent;
 import net.towerquest.render.WorldRenderable;
 import net.towerquest.render.WorldRenderer;
-import net.towerquest.serialization.Deserializer;
 import net.towerquest.serialization.Serializable;
-import net.towerquest.serialization.SerializedData;
-import net.towerquest.serialization.SerializedDataType;
-import net.towerquest.serialization.Serializer;
+import net.towerquest.util.NFunction.Consumer;
 
 public class Level implements WorldRenderable, Serializable {
 	private List<Entity> entities = new ArrayList<Entity>();
+	public BindableEvent<Consumer<WorldRenderer>> renderEvent = new BindableEvent<>();
+	public BindableEvent<Consumer<Double>> updateEvent = new BindableEvent<>();
 	
 	@Override
 	public void render(WorldRenderer wr) {
-		// TODO Auto-generated method stub
-		for (Entity e : entities) {
-			e.render(wr);
-		}
+		renderEvent.fire(wr);
 	}
 	
 	public void update(double delta) {
-		for (Entity e : entities) {
-			e.update(delta);
-		}
+		updateEvent.fire(delta);
 	}
 	
 	// TODO must be updated

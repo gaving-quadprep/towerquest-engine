@@ -4,7 +4,7 @@ package net.towerquest.util;
  * 
  * i dont know how to java
  * 
- * @see java.util.Function
+ * @see java.util.NFunction
  * @param <R> the type of the result of the function
  */
 
