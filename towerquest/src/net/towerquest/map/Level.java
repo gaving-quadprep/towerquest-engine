@@ -11,7 +11,7 @@ import net.towerquest.serialization.Serializable;
 import net.towerquest.util.NFunction.Consumer;
 
 public class Level implements WorldRenderable, Serializable {
-	private List<Entity> entities = new ArrayList<Entity>();
+	private List<Entity> entities = new ArrayList<>();
 	public BindableEvent<Consumer<WorldRenderer>> renderEvent = new BindableEvent<>();
 	public BindableEvent<Consumer<Double>> updateEvent = new BindableEvent<>();
 	

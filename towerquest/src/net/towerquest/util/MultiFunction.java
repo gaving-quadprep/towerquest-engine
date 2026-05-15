@@ -9,6 +9,7 @@ package net.towerquest.util;
  */
 
 @FunctionalInterface
-public interface MultiFunction<R> {
-	R apply(Object... t);
+public interface MultiFunction<R> extends NFunction.Function<Object[],R> {
+	@Override
+	public R exec(Object... t);
 }

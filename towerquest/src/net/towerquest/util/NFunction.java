@@ -3,6 +3,7 @@ package net.towerquest.util;
 public interface NFunction<R> {
 	public interface NConsumer extends NFunction<Void> {}
 	
+	@SuppressWarnings("unchecked")
 	public static <R> R exec(NFunction<R> nf, Object... args) {
 		if (nf instanceof Producer)
 			return ((Producer<R>)nf).exec();
@@ -21,7 +22,7 @@ public interface NFunction<R> {
 	
 	@FunctionalInterface
 	public interface Producer<R> extends NFunction<R> {
-		R exec();
+		public R exec();
 	}
 	
 	@FunctionalInterface
@@ -30,7 +31,7 @@ public interface NFunction<R> {
 	
 	@FunctionalInterface
 	public interface Function<T, R> extends NFunction<R> {
-		R exec(T t);
+		public R exec(T t);
 	}
 
 	@FunctionalInterface
@@ -39,7 +40,7 @@ public interface NFunction<R> {
 	
 	@FunctionalInterface
 	public interface BiFunction<T,U,R> extends NFunction<R> {
-		R exec(T t, U u);
+		public R exec(T t, U u);
 	}
 	
 	@FunctionalInterface
@@ -49,7 +50,7 @@ public interface NFunction<R> {
 	
 	@FunctionalInterface
 	public interface TriFunction<T,U,V,R> extends NFunction<R> {
-		R exec(T t, U u, V v);
+		public R exec(T t, U u, V v);
 	}
 	
 	@FunctionalInterface
@@ -59,7 +60,7 @@ public interface NFunction<R> {
 	
 	@FunctionalInterface
 	public interface QuadFunction<T,U,V,W,R> extends NFunction<R> {
-		R exec(T t, U u, V v, W w);
+		public R exec(T t, U u, V v, W w);
 	}
 	
 	@FunctionalInterface

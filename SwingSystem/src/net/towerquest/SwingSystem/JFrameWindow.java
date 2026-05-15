@@ -3,21 +3,14 @@ package net.towerquest.SwingSystem;
 import java.awt.AWTException;
 import java.awt.BufferCapabilities;
 import java.awt.Canvas;
-import java.awt.GraphicsConfiguration;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.awt.image.BufferStrategy;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 
-import net.towerquest.system.KeyboardEventHandler;
-import net.towerquest.system.Renderer;
 import net.towerquest.system.Window;
 
 

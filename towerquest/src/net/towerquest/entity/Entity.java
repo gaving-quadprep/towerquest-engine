@@ -14,7 +14,7 @@ import net.towerquest.serialization.Serializable;
 import net.towerquest.util.Logger;
 
 public class Entity implements Serializable, WorldRenderable {
-	private List<Component> components = new ArrayList<Component>();
+	private List<Component> components = new ArrayList<>();
 	
 	@Pointer
 	protected Level level;
@@ -84,7 +84,7 @@ public class Entity implements Serializable, WorldRenderable {
 	
 	@SuppressWarnings("unchecked")
 	public <T extends Component> List<T> getComponents(Class<T> clazz) {
-		List<T> ret = new ArrayList<T>();
+		List<T> ret = new ArrayList<>();
 		for (Component c : components) {
 			if (clazz.isInstance(c))
 				ret.add((T) c);

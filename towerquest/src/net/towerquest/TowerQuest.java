@@ -15,7 +15,6 @@ import net.towerquest.system.Window;
 import net.towerquest.util.Color;
 import net.towerquest.util.Logger;
 
-import java.io.FileInputStream;
 
 import net.towerquest.LWJGLSystem.LWJGLSystem;
 import net.towerquest.SwingSystem.SwingSystem;
