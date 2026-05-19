@@ -18,6 +18,18 @@ public class Rectangle implements Serializable, CollisionCheckable {
 	public Rectangle(java.awt.Rectangle rect) {
 		this(rect.x, rect.y, rect.width, rect.height);
 	}
+	
+	public static Rectangle fromPositions(double x0, double y0, double x1, double y1) {
+		double minX = Math.min(x0, x1);
+		double maxX = Math.max(x0, x1);
+		double minY = Math.min(y0, y1);
+		double maxY = Math.max(y0, y1);
+		return new Rectangle(minX, minY, (maxX - minX), (maxY - minY));
+	}
+	
+	public static Rectangle fromPoints(Point p0, Point p1) {
+		return fromPositions(p0.x, p0.y, p1.x, p1.y);
+	}
 
 	@Override
 	public boolean isTouching(CollisionCheckable other) {

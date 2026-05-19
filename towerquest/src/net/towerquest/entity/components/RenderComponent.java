@@ -22,7 +22,7 @@ public class RenderComponent extends Component implements WorldRenderable {
 	@Override
 	public void addToLevel(Level level) {
 		// this is necessary because java treats void and Void as different :blunder:
-		level.renderEvent.bind((wr) -> {render(wr); return null;});
+		level.renderEvent.bind((wr) -> render(wr));
 	}
 	
 	@Override

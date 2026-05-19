@@ -4,6 +4,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import net.towerquest.util.ArrayUtils;
+import net.towerquest.util.NFunction.Consumer;
 
 public class QuadTree {
 	int maxDepth = 6;
@@ -54,14 +55,14 @@ public class QuadTree {
 			this.area = area;
 			this.parent = parent;
 		}
+		abstract void add(CollisionCheckable cc);
+		
 	}
 	
 	class QuadTreeBranch extends QuadTreeNode {
 		QuadTreeBranch(Rectangle area, QuadTreeBranch parent) {
 			super(area, parent);
-			for (QuadTreeBranchDirection d : QuadTreeBranchDirection.values()) {
-				set(d, new QuadTreeLeafDividable(d.getSubsection(area), this));
-			}
+			forEachDir((d) -> set(d, new QuadTreeLeafDividable(d.getSubsection(area), this)));
 		}
 		QuadTreeNode northeast;
 		QuadTreeNode northwest;
@@ -114,6 +115,47 @@ public class QuadTree {
 				southwest = node;
 			}
 		}
+		public void forEachDir(Consumer<QuadTreeBranchDirection> fn) {
+			for (QuadTreeBranchDirection d : QuadTreeBranchDirection.values()) {
+				fn.exec(d);
+			}
+		}
+		@Override
+		void add(CollisionCheckable cc) {
+			if (cc instanceof Point) {
+				addPoint((Point) cc);
+			} else if (cc instanceof Rectangle) {
+				addRect((Rectangle) cc);
+			} else {
+				throw new RuntimeException("New shape has been added but does not have a QuadTreeBranch add method");
+			}
+		}
+		void addPoint(Point p) {
+			getBranch(p.x, p.y).add(p);
+		}
+		void addRect(Rectangle rect) {
+			if (rect.contains(this.area)) {
+				addRectWithoutChecking(rect);
+			} else {
+				forEachDir((d) -> {
+					get(d).add(rect);
+				});
+			}
+		}
+		
+		/** If a branch is fully contained within a rectangle, all nodes within it must
+		 * also be contained within the rectangle. Not checking all of these is faster.
+		 */
+		void addRectWithoutChecking(Rectangle rect) {
+			forEachDir((d) -> {
+				QuadTreeNode node = get(d);
+				if (node instanceof QuadTreeBranch) {
+					((QuadTreeBranch)node).addRectWithoutChecking(rect);
+				} else {
+					((QuadTreeLeaf)node).add(rect);
+				}
+			});
+		}
 	}
 
 	class QuadTreeLeaf extends QuadTreeNode {
@@ -121,6 +163,7 @@ public class QuadTree {
 		QuadTreeLeaf(Rectangle area, QuadTreeBranch parent) {
 			super(area, parent);
 		}
+		@Override
 		void add(CollisionCheckable cc) {
 			items.add(cc);
 		}
@@ -155,13 +198,13 @@ public class QuadTree {
 		}
 		void divide() {
 			QuadTreeBranch replacement = new QuadTreeBranch(area, parent);
-			for (QuadTreeBranchDirection d : QuadTreeBranchDirection.values()) {
+			replacement.forEachDir((d) -> {
 				QuadTreeLeafDividable leaf = (QuadTreeLeafDividable) replacement.get(d);
 				for (CollisionCheckable item : items) {
 					if (leaf.area.isTouching(item))
 						leaf.add(item);
 				}
-			}
+			});
 		}
 	}
 	
@@ -173,31 +216,25 @@ public class QuadTree {
 		return nodes[indexX][indexY];
 	}
 	
-	QuadTreeLeaf getLeafAtPoint(Point p) {
-		QuadTreeNode node = getFirstLevelNodeAt(p.x, p.y);
-		while (node instanceof QuadTreeBranch) {
-			node = ((QuadTreeBranch)node).getBranch(p.x, p.y);
-		}
-		return (QuadTreeLeaf) node;
-	}
 	public void addPoint(Point p) {
-		getLeafAtPoint(p).items.add(p);
+		getFirstLevelNodeAt(p.x, p.y).add(p);
 	}
-	Set<QuadTreeLeaf> getLeavesAtRect(Rectangle r) {
-		Set<QuadTreeLeaf> ret = new HashSet<>();
-		int startPosX = (int) ((r.x / quadTreeScale) + offset.x);
-		int endPosX = (int) Math.ceil((r.x + r.width / quadTreeScale) + offset.x);
-		int startPosY = (int) ((r.y / quadTreeScale) + offset.y);
-		int endPosY = (int) Math.ceil((r.y + r.width / quadTreeScale) + offset.y);
-		for (int x = startPosX; x < endPosX; x++) {
-			for (int y = startPosY; y < endPosY; y++) {
-				// TODO implement this
-			}
-		}
-		return ret;
+	// Returns a Rectangle which represents array positions (the decimal will always be 0)
+	// TODO there's probably a better way to do that
+	Rectangle getFirstLevelNodesAtRect(Rectangle r) {
+		return Rectangle.fromPositions(
+			Math.floor((r.x / quadTreeScale) + offset.x),
+			Math.floor((r.y / quadTreeScale) + offset.y),
+			Math.ceil((r.x + r.width / quadTreeScale) + offset.x),
+			Math.ceil((r.y + r.width / quadTreeScale) + offset.y));
 	}
 	public void addRect(Rectangle r) {
-		
+		Rectangle nodePositions = getFirstLevelNodesAtRect(r);
+		for (int x = (int) r.x; x < (r.x + r.width); x++) {
+			for (int y = (int) r.y; y < (r.y + r.height); y++) {
+				nodes[x][y].add(r);
+			}
+		}
 	}
 	
 }
