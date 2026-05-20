@@ -77,10 +77,10 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 	public void drawRect(Color color, int x0, int y0, int x1, int y1) {
 		shapeStart(color);
 		glBegin(GL_LINE_LOOP);
-		glVertex2f(x0, height-y0);
-		glVertex2f(x1, height-y0);
-		glVertex2f(x1, height-y1);
-		glVertex2f(x0, height-y1);
+		glVertex2f((float)x0 + 0.5f, (float)(height-y0) + 0.5f);
+		glVertex2f((float)x1 + 0.5f, (float)(height-y0) + 0.5f);
+		glVertex2f((float)x1 + 0.5f, (float)(height-y1) + 0.5f);
+		glVertex2f((float)x0 + 0.5f, (float)(height-y1) + 0.5f);
 		glEnd();
 	}
 
@@ -88,10 +88,10 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 	public void fillRect(Color color, int x0, int y0, int x1, int y1) {
 		shapeStart(color);
 		glBegin(GL_QUADS);
-		glVertex2f(x0, height-y0);
-		glVertex2f(x1, height-y0);
-		glVertex2f(x1, height-y1);
-		glVertex2f(x0, height-y1);
+		glVertex2f((float)x0 + 0.5f, (float)(height-y0) + 0.5f);
+		glVertex2f((float)x1 + 0.5f, (float)(height-y0) + 0.5f);
+		glVertex2f((float)x1 + 0.5f, (float)(height-y1) + 0.5f);
+		glVertex2f((float)x0 + 0.5f, (float)(height-y1) + 0.5f);
 		glEnd();
 	}
 
@@ -100,7 +100,8 @@ public class OpenGLRenderer implements Renderer<TextureImage> {
 		// TODO Auto-generated method stub
 		GL11.glClear(GL11.GL_COLOR_BUFFER_BIT | GL11.GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
-		height = parent.getHeight();
+		// idk why this works but it does
+		height = parent.getHeight() - 1;
 	}
 
 	@Override

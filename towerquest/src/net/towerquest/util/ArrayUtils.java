@@ -5,7 +5,7 @@ public abstract class ArrayUtils {
 		return (index < 0) || (index >= array.length);
 	}
 	public static boolean isOutOfBounds2D(Object[][] array, int indexX, int indexY) {
-		return ((indexX < 0) || (indexX >= array.length)) &&
+		return ((indexX < 0) || (indexX >= array.length)) ||
 				((indexY < 0) || (indexY >= array[0].length));
 	}
 }

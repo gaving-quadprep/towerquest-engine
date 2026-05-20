@@ -22,4 +22,9 @@ public class Point implements Serializable, CollisionCheckable {
 			return other.isTouching(this);
 		}
 	}
+
+	@Override
+	public boolean contains(CollisionCheckable other) {
+		return false;
+	}
 }

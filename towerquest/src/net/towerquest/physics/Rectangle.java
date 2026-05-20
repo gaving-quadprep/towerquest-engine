@@ -39,8 +39,8 @@ public class Rectangle implements Serializable, CollisionCheckable {
 		// another reason why java needs unsigned
 		if (other instanceof Point) {
 			Point p = (Point)other;
-			return (p.x > x && p.x < x + width) &&
-					(p.y > y && p.y < y + height);
+			return (p.x >= x && p.x <= x + width) &&
+					(p.y >= y && p.y <= y + height);
 		} else if (other instanceof Rectangle) {
 			Rectangle r = (Rectangle)other;
 			return (r.x + r.width > x) && (r.x < x + width) &&
@@ -50,9 +50,18 @@ public class Rectangle implements Serializable, CollisionCheckable {
 		}
 	}
 	
-	public boolean contains(Rectangle other) {
-		return (other.x > x) && (other.y > y) && 
-				(other.x + other.width < x + width) && (other.y + other.height < y + height);
+	@Override
+	public boolean contains(CollisionCheckable other) {
+		if (other instanceof Rectangle) {
+			Rectangle rect = (Rectangle)other;
+			return (rect.x > x) && (rect.y > y) && (rect.x + rect.width < x + width)
+					&& (rect.y + rect.height < y + height);
+		} else if (other instanceof Point) {
+			Point p = (Point)other;
+			return (p.x > x && p.x < x + width) &&
+					(p.y > y && p.y < y + height);
+		}
+		return false;
 	}
 	
 }
