@@ -39,14 +39,14 @@ public class Entity implements Serializable, WorldRenderable {
 	/** Called when the component is added to a level.
 	 *  Doesn't add it to the level, instead use Level's addEntity.
 	 */
-	public void addToLevel(Level level) {
+	void addToLevel(Level level) {
 		setLevel(level);
 		for (Component c : components)
 			c.addToLevel(level);
 	}
 	
 	/** Likewise, called when the component is removed from the level. */
-	public void removeFromLevel(Level level) {
+	void removeFromLevel(Level level) {
 		for (Component c : components)
 			c.removeFromLevel(level);
 	}
@@ -59,14 +59,14 @@ public class Entity implements Serializable, WorldRenderable {
 				for (Component c2 : components) {
 					if (d.isInstance(c2)) {
 						hasDependency = true;
-						Logger.instance.log(c2.getClass().getSimpleName() + " is an instance of " + d.getSimpleName());
+						Logger.instance.log(Logger.Level.DEBUG, c2.getClass().getSimpleName() + " is an instance of " + d.getSimpleName());
 					}
 				}
 				if (!hasDependency)
 					throw new MissingDependenciesException(d.getName());
 			}
 		} else {
-			Logger.instance.log("no deps for "+c.getClass().getSimpleName());
+			Logger.instance.log(Logger.Level.DEBUG, "no deps for "+c.getClass().getSimpleName());
 		}
 		
 		components.add(c);
