@@ -3,8 +3,8 @@ package net.towerquest.SwingSystem;
 import java.awt.Graphics2D;
 import java.awt.image.BufferStrategy;
 
-import net.towerquest.system.Renderer;
-import net.towerquest.util.Color;
+import net.towerquest.towerquest.system.Renderer;
+import net.towerquest.towerquest.util.Color;
 
 public class Graphics2DRenderer implements Renderer<BufferedImageWrapper> {
 	BufferStrategy bs;

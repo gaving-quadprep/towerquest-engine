@@ -5,8 +5,8 @@ import static org.lwjgl.opengl.GL11.*;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
-import net.towerquest.system.Renderer;
-import net.towerquest.util.Color;
+import net.towerquest.towerquest.system.Renderer;
+import net.towerquest.towerquest.util.Color;
 
 public class OpenGLRenderer implements Renderer<TextureImage> {
 	LWJGLWindow parent;

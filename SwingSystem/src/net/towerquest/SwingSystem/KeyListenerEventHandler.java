@@ -7,10 +7,10 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Consumer;
 
-import net.towerquest.system.KeyboardEventHandler;
-import net.towerquest.system.KeyboardEventHandler.KeyCode;
-import net.towerquest.util.BiHashMap;
-import net.towerquest.util.BiMap;
+import net.towerquest.towerquest.system.KeyboardEventHandler;
+import net.towerquest.towerquest.system.KeyboardEventHandler.KeyCode;
+import net.towerquest.towerquest.util.BiHashMap;
+import net.towerquest.towerquest.util.BiMap;
 
 public class KeyListenerEventHandler implements KeyboardEventHandler, KeyListener {
 	private Consumer<KeyCode> onKeyPressed = null, onKeyReleased = null;

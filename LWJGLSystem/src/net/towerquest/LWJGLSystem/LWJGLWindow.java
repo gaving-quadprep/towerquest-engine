@@ -6,7 +6,7 @@ import org.lwjgl.LWJGLException;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.DisplayMode;
 
-import net.towerquest.system.Window;
+import net.towerquest.towerquest.system.Window;
 
 public class LWJGLWindow implements Window<TextureImage, OpenGLRenderer, LWJGLKeyboard> {
 	OpenGLRenderer renderer;

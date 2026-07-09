@@ -7,9 +7,9 @@ import java.util.function.Consumer;
 
 import org.lwjgl.input.Keyboard;
 
-import net.towerquest.system.KeyboardEventHandler;
-import net.towerquest.util.BiHashMap;
-import net.towerquest.util.BiMap;
+import net.towerquest.towerquest.system.KeyboardEventHandler;
+import net.towerquest.towerquest.util.BiHashMap;
+import net.towerquest.towerquest.util.BiMap;
 
 public class LWJGLKeyboard implements KeyboardEventHandler {
 	private Consumer<KeyCode> onKeyUp = null, onKeyDown = null;

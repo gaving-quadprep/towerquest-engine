@@ -5,7 +5,7 @@ import java.util.Collection;
 
 import org.lwjgl.openal.AL10;
 
-import net.towerquest.system.SoundSystem;
+import net.towerquest.towerquest.system.SoundSystem;
 
 public class OpenALSoundSystem implements SoundSystem<OpenALSoundBuffer> {
 

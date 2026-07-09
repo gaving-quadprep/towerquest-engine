@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
-import net.towerquest.system.BaseSystem;
+import net.towerquest.towerquest.system.BaseSystem;
 
 public class SwingSystem implements BaseSystem<JFrameWindow,Graphics2DRenderer,BufferedImageWrapper,KeyListenerEventHandler> {
 

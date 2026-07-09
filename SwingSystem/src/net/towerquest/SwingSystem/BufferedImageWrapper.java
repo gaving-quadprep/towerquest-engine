@@ -2,8 +2,8 @@ package net.towerquest.SwingSystem;
 
 import java.awt.image.BufferedImage;
 
-import net.towerquest.system.Image;
-import net.towerquest.util.Color;
+import net.towerquest.towerquest.system.Image;
+import net.towerquest.towerquest.util.Color;
 
 public class BufferedImageWrapper implements Image {
 	BufferedImage image;

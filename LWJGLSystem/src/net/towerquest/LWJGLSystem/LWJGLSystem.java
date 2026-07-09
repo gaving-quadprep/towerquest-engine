@@ -22,8 +22,8 @@ import javax.imageio.ImageIO;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.opengl.GL11;
 
-import net.towerquest.system.BaseSystem;
-import net.towerquest.system.SoundSystem;
+import net.towerquest.towerquest.system.BaseSystem;
+import net.towerquest.towerquest.system.SoundSystem;
 
 public class LWJGLSystem implements BaseSystem<LWJGLWindow, OpenGLRenderer, TextureImage, LWJGLKeyboard> {
 	LWJGLWindow window;

@@ -11,7 +11,7 @@ import java.lang.reflect.InvocationTargetException;
 
 import javax.swing.JFrame;
 
-import net.towerquest.system.Window;
+import net.towerquest.towerquest.system.Window;
 
 
 public class JFrameWindow implements Window<BufferedImageWrapper,Graphics2DRenderer,KeyListenerEventHandler> {
