@@ -91,9 +91,9 @@ public class ModLoader {
 		Path path = Paths.get(directory);
 		try (Stream<Path> stream = Files.walk(path)) {
 			stream.filter(Files::isRegularFile)
-            .filter(path2 -> path2.toString().endsWith(".jar"))
-            .forEach(path2 -> {
-            	// idk why the for loop outside can't catch the exception
+			.filter(path2 -> path2.toString().endsWith(".jar"))
+			.forEach(path2 -> {
+				// idk why the for loop outside can't catch the exception
 				try {
 					loadMod(path2.toUri().toURL());
 				} catch (MalformedURLException e) {
