@@ -1,7 +1,5 @@
 package net.towerquest.engine.util;
 
-import java.util.Set;
-
 public interface UniqueBiMap<K, V> {
 	public int size();
 	public void put(K k, V v);

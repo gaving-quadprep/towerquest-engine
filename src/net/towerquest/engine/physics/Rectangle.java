@@ -64,4 +64,8 @@ public class Rectangle implements Serializable, CollisionCheckable {
 		return false;
 	}
 	
+	public Point center() {
+		return new Point(x + (width / 2), y + (height / 2));
+	}
+	
 }

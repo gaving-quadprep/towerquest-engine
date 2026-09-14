@@ -47,6 +47,7 @@ public class Entity implements Serializable, WorldRenderable {
 	
 	/** Likewise, called when the component is removed from the level. */
 	void removeFromLevel(Level level) {
+		setLevel(null);
 		for (Component c : components)
 			c.removeFromLevel(level);
 	}
@@ -92,4 +93,7 @@ public class Entity implements Serializable, WorldRenderable {
 		}
 		return ret;
 	}
+	
+	// TODO: setLater function
+	
 }
