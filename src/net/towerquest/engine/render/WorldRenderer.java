@@ -3,6 +3,7 @@ package net.towerquest.engine.render;
 import net.towerquest.engine.physics.IntPoint;
 import net.towerquest.engine.physics.Point;
 import net.towerquest.engine.physics.Rectangle;
+import net.towerquest.engine.system.Image;
 import net.towerquest.engine.system.Renderer;
 import net.towerquest.engine.util.Color;
 
@@ -37,15 +38,35 @@ public class WorldRenderer {
 	public IntPoint toPixel(Point p) {
 		return toPixel(p.x, p.y); 
 	}
+	
+	// TODO add all functions
 
+	public void drawImage(Image image, double x, double y) {
+		IntPoint point = toPixel(x, y);
+		renderer.drawImage(image, point.x, point.y);
+	}
+
+	public void drawImage(Image image, double x, double y, double w, double h) {
+		IntPoint point0 = toPixel(x, y);
+		IntPoint point1 = toPixel(x+w, y+h);
+		renderer.drawImage(image, point0.x, point0.y, point1.x, point1.y);
+	}
+	
 	public void drawRect(Color color, double x, double y, double w, double h) {
 		IntPoint point0 = toPixel(x, y);
 		IntPoint point1 = toPixel(x+w, y+h);
 		renderer.drawRect(color, point0.x, point0.y, point1.x, point1.y);
 	}
+	
 	public void fillRect(Color color, double x, double y, double w, double h) {
 		IntPoint point0 = toPixel(x, y);
 		IntPoint point1 = toPixel(x+w, y+h);
 		renderer.fillRect(color, point0.x, point0.y, point1.x, point1.y);
+	}
+	
+	public void drawLine(Color color, double x0, double y0, double x1, double y1) {
+		IntPoint point0 = toPixel(x0, y0);
+		IntPoint point1 = toPixel(x1, y1);
+		renderer.drawLine(color, point0.x, point0.y, point1.x, point1.y);
 	}
 }
