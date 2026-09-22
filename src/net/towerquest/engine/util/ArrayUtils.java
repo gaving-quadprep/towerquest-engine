@@ -1,5 +1,7 @@
 package net.towerquest.engine.util;
 
+import java.lang.reflect.Array;
+
 public abstract class ArrayUtils {
 	public static boolean isOutOfBounds(Object[] array, int index) {
 		return (index < 0) || (index >= array.length);

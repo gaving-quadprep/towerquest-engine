@@ -8,7 +8,7 @@ public class ClassRegistry<T> extends Registry<Class<? extends T>> {
 
 		Class<? extends T> clazz = this.get(name);
 		if(clazz != null) {
-			t = (T)clazz.getConstructor(paramc).newInstance(param);
+			t = clazz.getConstructor(paramc).newInstance(param);
 		}
 
 		return t;

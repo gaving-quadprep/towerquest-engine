@@ -27,4 +27,13 @@ public class Point implements Serializable, CollisionCheckable {
 	public boolean contains(CollisionCheckable other) {
 		return false;
 	}
+	
+	@Override
+	public boolean equals(Object other) {
+		if (other instanceof Point) {
+			return ((Point) other).x == x &&
+					((Point) other).y == y;
+		}
+		return false;
+	}
 }

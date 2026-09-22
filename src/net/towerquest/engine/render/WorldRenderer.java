@@ -1,11 +1,51 @@
 package net.towerquest.engine.render;
 
+import net.towerquest.engine.physics.IntPoint;
+import net.towerquest.engine.physics.Point;
+import net.towerquest.engine.physics.Rectangle;
 import net.towerquest.engine.system.Renderer;
+import net.towerquest.engine.util.Color;
 
 public class WorldRenderer {
-	private float worldScale;
-	private Renderer renderer;
-	public void drawRect(float x, float y, float w, float h) {
-		
+	public Renderer renderer;
+
+	private final Rectangle dimensions;
+	private int canvasWidth;
+	private int canvasHeight;
+	
+	// these are in order to avoid doing the same calculation multiple times
+	private double pixelsPerTileX;
+	private double pixelsPerTileY;
+	
+	// default scale is 16 pixels per tile
+	public WorldRenderer(double x, double y, double w, double h) {
+		this.dimensions = new Rectangle(x, y, w, h);
+		this.canvasWidth = (int) (w * 16);
+		this.canvasHeight = (int) (w * 16);
+		updatePPT();
+	}
+	
+	void updatePPT() {
+		pixelsPerTileX = canvasWidth / dimensions.width;
+		pixelsPerTileY = canvasHeight / dimensions.height;
+	}
+	
+	public IntPoint toPixel(double x, double y) {
+		return new IntPoint((int) Math.round((x-dimensions.x)*pixelsPerTileX),
+				(int) Math.round((y-dimensions.y)*pixelsPerTileY)); 
+	}
+	public IntPoint toPixel(Point p) {
+		return toPixel(p.x, p.y); 
+	}
+
+	public void drawRect(Color color, double x, double y, double w, double h) {
+		IntPoint point0 = toPixel(x, y);
+		IntPoint point1 = toPixel(x+w, y+h);
+		renderer.drawRect(color, point0.x, point0.y, point1.x, point1.y);
+	}
+	public void fillRect(Color color, double x, double y, double w, double h) {
+		IntPoint point0 = toPixel(x, y);
+		IntPoint point1 = toPixel(x+w, y+h);
+		renderer.fillRect(color, point0.x, point0.y, point1.x, point1.y);
 	}
 }
