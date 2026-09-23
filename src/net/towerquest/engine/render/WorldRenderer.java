@@ -52,6 +52,14 @@ public class WorldRenderer {
 		renderer.drawImage(image, point0.x, point0.y, point1.x, point1.y);
 	}
 	
+	public void drawTile(Image image, double x0, double y0, double x1, double y1,
+			int tilex0, int tiley0, int tilex1, int tiley1) {
+		IntPoint point0 = toPixel(x0, y0);
+		IntPoint point1 = toPixel(x1, y1);
+		renderer.drawTile(image, point0.x, point0.y, point1.x, point1.y,
+				tilex0, tiley0, tilex1, tiley1);
+	}
+	
 	public void drawRect(Color color, double x, double y, double w, double h) {
 		IntPoint point0 = toPixel(x, y);
 		IntPoint point1 = toPixel(x+w, y+h);
