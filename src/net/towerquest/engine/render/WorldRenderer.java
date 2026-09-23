@@ -38,8 +38,6 @@ public class WorldRenderer {
 	public IntPoint toPixel(Point p) {
 		return toPixel(p.x, p.y); 
 	}
-	
-	// TODO add all functions
 
 	public void drawImage(Image image, double x, double y) {
 		IntPoint point = toPixel(x, y);
@@ -71,10 +69,24 @@ public class WorldRenderer {
 		IntPoint point1 = toPixel(x+w, y+h);
 		renderer.fillRect(color, point0.x, point0.y, point1.x, point1.y);
 	}
-	
+
 	public void drawLine(Color color, double x0, double y0, double x1, double y1) {
 		IntPoint point0 = toPixel(x0, y0);
 		IntPoint point1 = toPixel(x1, y1);
 		renderer.drawLine(color, point0.x, point0.y, point1.x, point1.y);
+	}
+	
+	public void drawTri(Color color, double x0, double y0, double x1, double y1, double x2, double y2) {
+		IntPoint point0 = toPixel(x0, y0);
+		IntPoint point1 = toPixel(x1, y1);
+		IntPoint point2 = toPixel(x2, y2);
+		renderer.drawTri(color, point0.x, point0.y, point1.x, point1.y, point2.x, point2.y);
+	}
+	
+	public void fillTri(Color color, double x0, double y0, double x1, double y1, double x2, double y2) {
+		IntPoint point0 = toPixel(x0, y0);
+		IntPoint point1 = toPixel(x1, y1);
+		IntPoint point2 = toPixel(x2, y2);
+		renderer.fillTri(color, point0.x, point0.y, point1.x, point1.y, point2.x, point2.y);
 	}
 }
