@@ -2,17 +2,19 @@ package net.towerquest.engine.physics;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
+import net.towerquest.engine.physics.CollisionCheckable.CollisionCheckableUnimplementedException;
 import net.towerquest.engine.system.Renderer;
 import net.towerquest.engine.util.ArrayUtils;
 import net.towerquest.engine.util.Color;
 import net.towerquest.engine.util.NFunction.Consumer;
 
 public class QuadTree {
-	int maxDepth = 6;
-	int maxItemsPerNode = 8;
+	int maxDepth = 5;
+	int maxItemsPerNode = 16;
 	double quadTreeScale = 64;
 	Point offset = new Point(0d, 0d);
 	QuadTreeNode[][] nodes;
@@ -151,7 +153,7 @@ public class QuadTree {
 			} else if (cc instanceof Rectangle) {
 				addRect((Rectangle) cc);
 			} else {
-				throw new RuntimeException("New shape has been added but does not have a QuadTreeBranch add method");
+				throw new CollisionCheckableUnimplementedException("New shape has been added but does not have a QuadTreeBranch add method");
 			}
 		}
 		void addPoint(Point p) {
@@ -183,13 +185,19 @@ public class QuadTree {
 	}
 
 	class QuadTreeLeaf extends QuadTreeNode {
-		Set<CollisionCheckable> items = new HashSet<>();
+		// LinkedHashSets are faster to iterate over
+		Set<CollisionCheckable> items = new LinkedHashSet<>();
 		QuadTreeLeaf(Rectangle area, QuadTreeBranch parent) {
 			super(area, parent);
 		}
 		@Override
 		void add(CollisionCheckable cc) {
 			items.add(cc);
+			if (cc instanceof Rectangle) {
+				Set<QuadTreeLeaf> s = rectCache.get(cc);
+				if (s != null)
+					s.add(this);
+			}
 		}
 	}
 	
@@ -205,12 +213,16 @@ public class QuadTree {
 			addWithoutDividing(cc);
 			/* ignore any rectangles that cover the entirety of the leaf, because they
 			 * will keep dividing further, wasting resources
+			 * also, for large rectangles, being split into a lot of leaves causes a performance reduction
 			 */
 			int itemCount = items.size();
 			for (CollisionCheckable cc2 : items) {
-				if (cc2 instanceof Rectangle)
-					if (((Rectangle)cc2).contains(area))
+				if (cc2 instanceof Rectangle) {
+					Rectangle r = (Rectangle)cc2;
+					if (r.contains(area) || 
+							(r.width > area.width * 2 || r.height > area.height * 2))
 						itemCount--;
+				}
 			}
 			if (itemCount > maxItemsPerNode) {
 				int parents = 0;
@@ -251,6 +263,16 @@ public class QuadTree {
 		return nodes[indexX][indexY];
 	}
 	
+	QuadTreeLeaf getLeafAt(double x, double y) {
+		QuadTreeNode node = getFirstLevelNodeAt(x, y);
+		if (node instanceof QuadTreeLeaf)
+			return (QuadTreeLeaf)node;
+		while (node instanceof QuadTreeBranch) {
+			node = ((QuadTreeBranch)node).getBranch(x, y);
+		}
+		return (QuadTreeLeaf) node;
+	}
+	
 	public void forAllFirstLevelNodes(Consumer<QuadTreeNode> fn) {
 		for (int x = 0; x < nodes.length; x++) {
 			for (int y = 0; y < nodes[x].length; y++) {
@@ -275,20 +297,61 @@ public class QuadTree {
 
 	public void addRect(Rectangle r) {
 		Set<QuadTreeLeaf> leaves = new HashSet<>();
+		rectCache.put(r, leaves);
 		for (double x = Math.floor(r.x); x < Math.ceil(r.x + r.width); x += quadTreeScale) {
 			for (double y = Math.floor(r.y); y < Math.ceil(r.y + r.height); y += quadTreeScale) {
-				QuadTreeNode node = getFirstLevelNodeAt(x, y);
-				node.add(r);
-				if (node instanceof QuadTreeBranch) {
-					((QuadTreeBranch)node).forAllChildren((leaf) -> {
-						leaves.add(leaf);
-					});
-				} else {
-					leaves.add((QuadTreeLeaf) node);
-				}
+				getFirstLevelNodeAt(x, y).add(r);
 			}
 		}
-		rectCache.put(r, leaves);
+	}
+	
+	public void add(CollisionCheckable cc) {
+		if (cc instanceof Point) {
+			addPoint((Point)cc);
+		} else if (cc instanceof Rectangle) {
+			addRect((Rectangle)cc);
+		} else {
+			throw new CollisionCheckableUnimplementedException(cc.getClass().getSimpleName() + "is not implemented");
+		}
+	}
+
+	public void removePoint(Point p) {
+		QuadTreeLeaf containingLeaf = getLeafAt(p.x, p.y);
+		containingLeaf.items.remove(p);
+	}
+	
+	public void removeRect(Rectangle r) {
+		Set<QuadTreeLeaf> containingLeaves = rectCache.get(r);
+		if (containingLeaves == null)
+			return;
+		for (QuadTreeLeaf leaf : containingLeaves) {
+			leaf.items.remove(r);
+		}
+		rectCache.remove(r);
+	}
+
+	public Set<CollisionCheckable> getTouching(CollisionCheckable cc) {
+		Set<CollisionCheckable> touching = new HashSet<>();
+		if (cc instanceof Point) {
+			Point p = (Point)cc;
+			QuadTreeLeaf leaf = getLeafAt(p.x, p.y);
+			for (CollisionCheckable cc2 : leaf.items) {
+				if (!touching.contains(cc2))
+					if (cc2.isTouching(p))
+						touching.add(cc2);
+			}
+		} else if (cc instanceof Rectangle) {
+			for (QuadTreeLeaf leaf : rectCache.get((Rectangle)cc)) {
+				for (CollisionCheckable cc2 : leaf.items) {
+					if (!touching.contains(cc2))
+						if (cc2.isTouching(cc))
+							touching.add(cc);
+				}
+			}
+		} else {
+			throw new CollisionCheckableUnimplementedException(cc.getClass().getSimpleName() + "is not implemented");
+		}
+		return touching;
 	}
 	
 	public void visualize(Renderer r) {

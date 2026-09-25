@@ -1,5 +1,7 @@
 package net.towerquest.engine.physics;
 
+import java.util.Objects;
+
 import net.towerquest.serialization.Serializable;
 
 public class Point implements Serializable, CollisionCheckable {
@@ -35,5 +37,10 @@ public class Point implements Serializable, CollisionCheckable {
 					((Point) other).y == y;
 		}
 		return false;
+	}
+	
+	@Override
+	public String toString() {
+		return "(" + x + ", " + y + ")";
 	}
 }
