@@ -7,12 +7,15 @@ public class GuiDim implements Serializable {
 	public int offsetX, offsetY, offsetW, offsetH;
 	public double scaleX, scaleY, scaleW, scaleH;
 	
-	public Rectangle toRectangle(int xScale, int yScale) {
+	public Rectangle toRectangle(double xOffset, double yOffset, double xScale, double yScale) {
 		return new Rectangle(
-				(scaleX * (double)xScale) + offsetX,
-				(scaleY * (double)yScale) + offsetY,
-				(scaleW * (double)xScale) + offsetW,
-				(scaleH * (double)yScale) + offsetH
+				(scaleX * xScale) + offsetX,
+				(scaleY * yScale) + offsetY,
+				(scaleW * xScale) + offsetW,
+				(scaleH * yScale) + offsetH
 		);
+	}
+	public Rectangle toRectangle(double xScale, double yScale) {
+		return toRectangle(0, 0, xScale, yScale);
 	}
 }
