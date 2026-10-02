@@ -52,14 +52,7 @@ public class ModLoader {
 			Class<?> tqModClass = Class.forName("TQModEntry", true, classLoader);
 			TowerQuestMod mod = (TowerQuestMod) tqModClass.getConstructor(GameInstance.class)
 					.newInstance(game);
-			ModInfo info = mod.getModInfo();
-			if (!isModCompatible(info)) {
-				throw new IncompatibleModException(info);
-			}
-			
-			mod.init(game);
-			mods.add(mod);
-			
+			loadMod(mod);
 		} catch (IOException e) {
 			game.logger.logException(Level.ERROR, e);
 		} catch (ClassNotFoundException e) {
@@ -86,6 +79,15 @@ public class ModLoader {
 		} catch (Exception e) { // catch-all in case the mod returns an error while initializing
 			game.logger.logException(Level.ERROR, e);
 		}
+	}
+	public void loadMod(TowerQuestMod mod) throws IncompatibleModException {
+		ModInfo info = mod.getModInfo();
+		if (!isModCompatible(info)) {
+			throw new IncompatibleModException(info);
+		}
+		
+		mod.init(game);
+		mods.add(mod);
 	}
 	public void loadMods(String directory) {
 		Path path = Paths.get(directory);
