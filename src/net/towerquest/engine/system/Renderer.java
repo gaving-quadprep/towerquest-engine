@@ -1,5 +1,6 @@
 package net.towerquest.engine.system;
 
+import net.towerquest.engine.physics.Rectangle;
 import net.towerquest.engine.util.Color;
 
 public interface Renderer<ImageType extends Image> {
@@ -9,7 +10,15 @@ public interface Renderer<ImageType extends Image> {
 	public void drawTile(ImageType im, int x0, int y0, int x1, int y1,
 			int tilex0, int tiley0, int tilex1, int tiley1);
 	public void drawRect(Color color, int x0, int y0, int x1, int y1);
+	public default void drawRect(Color color, Rectangle rect) {
+		drawRect(color, (int)rect.x, (int)rect.y,
+				(int)(rect.x+rect.width),(int)(rect.y+rect.height));
+	}
 	public void fillRect(Color color, int x0, int y0, int x1, int y1);
+	public default void fillRect(Color color, Rectangle rect) {
+		fillRect(color, (int)rect.x, (int)rect.y,
+				(int)(rect.x+rect.width),(int)(rect.y+rect.height));
+	}
 	public void drawLine(Color color, int x0, int y0, int x1, int y1);
 	public default void drawTri(Color color, int x0, int y0, int x1, int y1, int x2, int y2) {
 		drawLine(color, x0, y0, x1, y1);

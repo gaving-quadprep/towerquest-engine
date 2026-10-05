@@ -1,5 +1,7 @@
 package net.towerquest.engine.system;
 
+import java.awt.image.BufferedImage;
+
 import net.towerquest.engine.util.Color;
 
 public interface Image {
@@ -15,4 +17,6 @@ public interface Image {
 	
 	/** this should always use nearest neighbor when scaling up */
 	public Image getScaledImage(int newWidth, int newHeight);
+	
+	public BufferedImage toBufferedImage();
 }
