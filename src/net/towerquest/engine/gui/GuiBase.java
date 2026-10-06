@@ -9,9 +9,4 @@ public class GuiBase extends GuiElement {
 	public Rectangle getDimensionsOnScreen() {
 		return new Rectangle(0, 0, w, h);
 	}
-	
-	@Override
-	public void _render(Renderer r) {
-		
-	}
 }
