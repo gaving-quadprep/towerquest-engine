@@ -35,15 +35,22 @@ public class GuiList extends GuiElement {
 	@Override
 	public void add(GuiElement child) {
 		super.add(child);
+		recalculatePositions();
 	}
 	
 	@Override
 	protected Rectangle getDimensionsOnScreenOfChild(GuiElement child) {
+		// TODO this sucks
+		Rectangle childDim = child.getDimensionsOnScreen();
+		Rectangle thisDim = getDimensionsOnScreen();
+		Rectangle childTempDim  = childDimensions.toRectangle(thisDim.width, thisDim.height);
 		if (childDimensions == null) {
-			Rectangle dim = child.getDimensionsOnScreen();
-			dim.y = heightCache.get(child);
-			return dim;
+			childDim.y = heightCache.get(child);
+		} else {
+			childDim.y = (((TreeSet<GuiElement>)children).headSet(child).size() // index of it
+					* childTempDim.height) + childTempDim.y;
 		}
+		return childDim;
 	}
 	
 }
