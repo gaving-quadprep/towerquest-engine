@@ -1,4 +1,4 @@
-package net.towerquest.engine;
+package net.towerquest.engine.game;
 
 import net.towerquest.engine.system.BaseSystem;
 import net.towerquest.engine.util.Logger;

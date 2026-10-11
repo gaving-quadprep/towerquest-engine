@@ -10,9 +10,9 @@ import net.towerquest.engine.util.Color;
 public class WorldRenderer {
 	public Renderer renderer;
 
-	private final Rectangle dimensions;
-	private int canvasWidth;
-	private int canvasHeight;
+	public final Rectangle dimensions;
+	public int canvasWidth;
+	public int canvasHeight;
 	
 	// these are in order to avoid doing the same calculation multiple times
 	private double pixelsPerTileX;
@@ -25,8 +25,16 @@ public class WorldRenderer {
 		this.canvasHeight = (int) (w * 16);
 		updatePPT();
 	}
+
+	public WorldRenderer(Renderer r, double x, double y, double w, double h) {
+		this(x, y, w, h);
+		this.renderer = r;
+	}
+	public WorldRenderer(Renderer r) {
+		this(r, 0, 0, 20, 15);
+	}
 	
-	void updatePPT() {
+	public void updatePPT() {
 		pixelsPerTileX = canvasWidth / dimensions.width;
 		pixelsPerTileY = canvasHeight / dimensions.height;
 	}

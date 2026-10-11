@@ -2,7 +2,7 @@ package net.towerquest.engine.physics;
 
 import net.towerquest.serialization.Serializable;
 
-public class Rectangle implements Serializable, CollisionCheckable {
+public class Rectangle implements Serializable, Cloneable, CollisionCheckable {
 	public double x;
 	public double y;
 	public double width;
@@ -68,4 +68,10 @@ public class Rectangle implements Serializable, CollisionCheckable {
 		return new Point(x + (width / 2), y + (height / 2));
 	}
 	
+	public void copyFrom(Rectangle other) {
+		x = other.x;
+		y = other.y;
+		width = other.width;
+		height = other.height;
+	}
 }

@@ -1,6 +1,6 @@
 package net.towerquest.engine.mod;
 
-import net.towerquest.engine.GameInstance;
+import net.towerquest.engine.game.GameInstance;
 
 public interface TowerQuestMod {
 	public ModInfo getModInfo();

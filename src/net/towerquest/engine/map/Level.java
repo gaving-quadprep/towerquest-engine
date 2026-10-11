@@ -3,9 +3,10 @@ package net.towerquest.engine.map;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.towerquest.engine.GameInstance;
 import net.towerquest.engine.entity.Entity;
 import net.towerquest.engine.event.BindableEvent;
+import net.towerquest.engine.game.GameInstance;
+import net.towerquest.engine.physics.Rectangle;
 import net.towerquest.engine.render.WorldRenderable;
 import net.towerquest.engine.render.WorldRenderer;
 import net.towerquest.engine.util.NFunction.Consumer;
@@ -16,6 +17,7 @@ public class Level implements WorldRenderable, Serializable {
 	public BindableEvent<Consumer<WorldRenderer>> renderEvent = new BindableEvent<>();
 	public BindableEvent<Consumer<Double>> updateEvent = new BindableEvent<>();
 	public GameInstance g;
+	public Rectangle playerCamera;
 	
 	@Override
 	public void render(WorldRenderer wr) {

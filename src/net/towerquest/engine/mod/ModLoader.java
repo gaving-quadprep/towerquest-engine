@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Stream;
 
-import net.towerquest.engine.GameInstance;
+import net.towerquest.engine.game.GameInstance;
 import net.towerquest.engine.util.Logger;
 import net.towerquest.engine.util.Logger.Level;
 
