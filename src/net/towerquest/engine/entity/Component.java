@@ -19,4 +19,5 @@ public abstract class Component implements Serializable {
 	public void addedToLevel(Level level) {}
 	public void removedFromLevel(Level level) {}
 	
+	public void update(double delta) {}
 }

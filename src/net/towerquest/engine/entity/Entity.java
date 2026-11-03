@@ -15,6 +15,7 @@ import net.towerquest.serialization.Serializable;
 
 public class Entity implements Serializable, WorldRenderable {
 	private List<Component> components = new ArrayList<>();
+	public EntityType type;
 	
 	@Pointer
 	protected Level level;

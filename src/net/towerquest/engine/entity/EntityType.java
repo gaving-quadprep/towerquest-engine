@@ -7,6 +7,7 @@ import java.lang.reflect.Method;
  * Helpful for level editors or things that spawn many of the same entity.
  */
 public abstract class EntityType {
+	public String name;
 	/** Creates an entity with the default settings. */
 	public abstract Entity create();
 	/** Returns a {@code Method} that can be used to apply custom settings.

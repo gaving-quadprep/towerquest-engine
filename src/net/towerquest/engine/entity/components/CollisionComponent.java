@@ -1,13 +1,16 @@
 package net.towerquest.engine.entity.components;
 
-import net.towerquest.engine.entity.Component;
+import java.util.ArrayList;
+import java.util.List;
+
 import net.towerquest.engine.physics.CollisionCheckable;
 
-@DependsOn(PositionComponent.class)
-public class CollisionComponent extends Component {
-	public Iterable<CollisionCheckable> hitboxes;
+public class CollisionComponent extends AbstractCollisionComponent {
+	public List<CollisionCheckable> hitboxes = new ArrayList<>();
 	
-	public CollisionComponent() {
-		super();
+	@Override
+	public Iterable<CollisionCheckable> getHitboxes() {
+		return hitboxes;
 	}
+
 }
