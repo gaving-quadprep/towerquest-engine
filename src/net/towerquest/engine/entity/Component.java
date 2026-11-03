@@ -16,7 +16,7 @@ public abstract class Component implements Serializable {
 		 return this.parent;
 	}
 	
-	public void addToLevel(Level level) {}
-	public void removeFromLevel(Level level) {}
+	public void addedToLevel(Level level) {}
+	public void removedFromLevel(Level level) {}
 	
 }

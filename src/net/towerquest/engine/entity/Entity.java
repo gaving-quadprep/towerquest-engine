@@ -36,20 +36,17 @@ public class Entity implements Serializable, WorldRenderable {
 		return this.level;
 	}
 	
-	/** Called when the component is added to a level.
-	 *  Doesn't add it to the level, instead use Level's addEntity.
-	 */
-	void addToLevel(Level level) {
+	
+	void addedToLevel(Level level) {
 		setLevel(level);
 		for (Component c : components)
-			c.addToLevel(level);
+			c.addedToLevel(level);
 	}
 	
-	/** Likewise, called when the component is removed from the level. */
-	void removeFromLevel(Level level) {
+	void removedFromLevel(Level level) {
 		setLevel(null);
 		for (Component c : components)
-			c.removeFromLevel(level);
+			c.removedFromLevel(level);
 	}
 	
 	public void addComponent(Component c) {
