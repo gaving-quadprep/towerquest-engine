@@ -22,4 +22,9 @@ public class IntPoint implements CollisionCheckable {
 	public boolean contains(CollisionCheckable other) {
 		return false;
 	}
+	
+	@Override
+	public Point getCenter() {
+		return new Point(x, y);
+	}
 }

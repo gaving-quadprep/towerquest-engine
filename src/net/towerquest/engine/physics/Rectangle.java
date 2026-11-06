@@ -63,9 +63,14 @@ public class Rectangle implements Serializable, Cloneable, CollisionCheckable {
 		}
 		return false;
 	}
-	
-	public Point center() {
+
+	public Point getCenter() {
 		return new Point(x + (width / 2), y + (height / 2));
+	}
+	
+	public void centerAt(Point p) {
+		this.x = p.x - (width / 2);
+		this.y = p.y - (height / 2);
 	}
 	
 	public void copyFrom(Rectangle other) {
@@ -73,5 +78,21 @@ public class Rectangle implements Serializable, Cloneable, CollisionCheckable {
 		y = other.y;
 		width = other.width;
 		height = other.height;
+	}
+	
+	public Point topLeft() {
+		return new Point(x, y);
+	}
+	
+	public Point topRight() {
+		return new Point(x + width, y);
+	}
+	
+	public Point bottomLeft() {
+		return new Point(x, y + height);
+	}
+	
+	public Point bottomRight() {
+		return new Point(x + width, y + height);
 	}
 }

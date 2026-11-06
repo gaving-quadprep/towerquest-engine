@@ -8,4 +8,5 @@ public interface CollisionCheckable {
 	}
 	public boolean isTouching(CollisionCheckable other);
 	public boolean contains(CollisionCheckable other);
+	public Point getCenter();
 }

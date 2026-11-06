@@ -13,7 +13,7 @@ import net.towerquest.engine.util.Logger;
 import net.towerquest.serialization.Pointer;
 import net.towerquest.serialization.Serializable;
 
-public class Entity implements Serializable, WorldRenderable {
+public final class Entity implements Serializable, WorldRenderable {
 	private List<Component> components = new ArrayList<>();
 	public EntityType type;
 	
@@ -48,6 +48,11 @@ public class Entity implements Serializable, WorldRenderable {
 		setLevel(null);
 		for (Component c : components)
 			c.removedFromLevel(level);
+	}
+	
+	public void update(double delta) {
+		for (Component c : components)
+			c.update(delta);
 	}
 	
 	public void addComponent(Component c) {

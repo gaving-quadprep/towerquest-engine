@@ -31,6 +31,11 @@ public class Point implements Serializable, CollisionCheckable {
 	}
 	
 	@Override
+	public Point getCenter() {
+		return this;
+	}
+	
+	@Override
 	public boolean equals(Object other) {
 		if (other instanceof Point) {
 			return ((Point) other).x == x &&
@@ -43,4 +48,5 @@ public class Point implements Serializable, CollisionCheckable {
 	public String toString() {
 		return "(" + x + ", " + y + ")";
 	}
+
 }
