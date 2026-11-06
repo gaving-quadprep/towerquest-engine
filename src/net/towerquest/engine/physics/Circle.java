@@ -6,7 +6,7 @@ public class Circle implements Serializable, Cloneable, CollisionCheckable {
 	public Point pos;
 	public double radius;
 	@Override
-	public boolean isTouching(CollisionCheckable other) {
+	public boolean isTouching(CollisionCheckable other, boolean ispassed) {
 		if (other instanceof Point) {
 			Point p = (Point)other;
 			double dx = p.x - pos.x;
@@ -18,7 +18,7 @@ public class Circle implements Serializable, Cloneable, CollisionCheckable {
 			double dy = Math.max(r.y, Math.min(pos.y, r.y + r.height)) - pos.y;
 			return ((dx * dx) + (dy * dy)) <= (radius * radius);
 		} else {
-			return other.isTouching(this);
+			return CollisionCheckable.passTo(this, other, ispassed);
 		}
 	}
 

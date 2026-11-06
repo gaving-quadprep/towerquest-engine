@@ -14,14 +14,14 @@ public class Point implements Serializable, CollisionCheckable {
 	}
 
 	@Override
-	public boolean isTouching(CollisionCheckable other) {
+	public boolean isTouching(CollisionCheckable other, boolean ispassed) {
 		if (other == null)
 			return false;
 		if (other instanceof Point) {
 			Point p = (Point)other;
 			return (p.x == x && p.y == y);
 		} else {
-			return other.isTouching(this);
+			return CollisionCheckable.passTo(this, other, ispassed);
 		}
 	}
 

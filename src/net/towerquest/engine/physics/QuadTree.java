@@ -6,7 +6,6 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-import net.towerquest.engine.physics.CollisionCheckable.CollisionCheckableUnimplementedException;
 import net.towerquest.engine.system.Renderer;
 import net.towerquest.engine.util.ArrayUtils;
 import net.towerquest.engine.util.Color;

@@ -32,7 +32,7 @@ public class Rectangle implements Serializable, Cloneable, CollisionCheckable {
 	}
 
 	@Override
-	public boolean isTouching(CollisionCheckable other) {
+	public boolean isTouching(CollisionCheckable other, boolean ispassed) {
 		if (other == null)
 			return false;
 		// this does not handle rectangles with negative dimensions (but why would you do that)
@@ -46,7 +46,7 @@ public class Rectangle implements Serializable, Cloneable, CollisionCheckable {
 			return (r.x + r.width > x) && (r.x < x + width) &&
 					(r.y + r.height > y) && (r.y < y + height);
 		} else {
-			return other.isTouching(this);
+			return CollisionCheckable.passTo(this, other, ispassed);
 		}
 	}
 	
