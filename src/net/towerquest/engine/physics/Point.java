@@ -1,7 +1,5 @@
 package net.towerquest.engine.physics;
 
-import java.util.Objects;
-
 import net.towerquest.serialization.Serializable;
 
 public class Point implements Serializable, CollisionCheckable {
@@ -31,8 +29,14 @@ public class Point implements Serializable, CollisionCheckable {
 	}
 	
 	@Override
-	public Point getCenter() {
+	public Point getPosition() {
 		return this;
+	}
+
+	@Override
+	public void setPosition(Point p) {
+		this.x = p.x;
+		this.y = p.y;
 	}
 	
 	@Override

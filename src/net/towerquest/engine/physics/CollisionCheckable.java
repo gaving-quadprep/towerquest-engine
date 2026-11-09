@@ -14,5 +14,7 @@ public interface CollisionCheckable {
 	}
 	
 	public boolean contains(CollisionCheckable other);
-	public Point getCenter();
+
+	public Point getPosition();
+	public void setPosition(Point p);
 }

@@ -14,7 +14,6 @@ public class IntPoint implements CollisionCheckable {
 
 	@Override
 	public boolean isTouching(CollisionCheckable other, boolean ispassed) {
-		// TODO more memory efficient way to do this
 		return new Point(x, y).isTouching(other, ispassed);
 	}
 	
@@ -24,7 +23,12 @@ public class IntPoint implements CollisionCheckable {
 	}
 	
 	@Override
-	public Point getCenter() {
+	public Point getPosition() {
 		return new Point(x, y);
+	}
+	@Override
+	public void setPosition(Point p) {
+		this.x = (int)p.x;
+		this.y = (int)p.y;
 	}
 }

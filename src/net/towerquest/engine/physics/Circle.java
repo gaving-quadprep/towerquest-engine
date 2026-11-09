@@ -38,8 +38,13 @@ public class Circle implements Serializable, Cloneable, CollisionCheckable {
 	}
 
 	@Override
-	public Point getCenter() {
+	public Point getPosition() {
 		return pos;
+	}
+
+	@Override
+	public void setPosition(Point p) {
+		pos = p;
 	}
 
 }

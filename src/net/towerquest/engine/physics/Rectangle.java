@@ -64,11 +64,13 @@ public class Rectangle implements Serializable, Cloneable, CollisionCheckable {
 		return false;
 	}
 
-	public Point getCenter() {
+	@Override
+	public Point getPosition() {
 		return new Point(x + (width / 2), y + (height / 2));
 	}
 	
-	public void centerAt(Point p) {
+	@Override
+	public void setPosition(Point p) {
 		this.x = p.x - (width / 2);
 		this.y = p.y - (height / 2);
 	}
@@ -95,4 +97,5 @@ public class Rectangle implements Serializable, Cloneable, CollisionCheckable {
 	public Point bottomRight() {
 		return new Point(x + width, y + height);
 	}
+
 }
